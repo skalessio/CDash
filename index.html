@@ -1,1 +1,169 @@
-placeholder website for CDash that has been slightly changed
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>CDash - by Kitware Inc.</title>
+
+<link href="kitware.css" rel="stylesheet" type="text/css" />
+
+<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
+<script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
+<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
+<link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
+<meta name="Description" content="CDash is an open-source, distributed, software quality system. CDash allows software projects to be tested at multiple sites in multiple configurations (hardware, operating systems, compilers, etc.). Results from a build/test sequence are transmitted to a central server using standard internet protocols" />
+<meta name="Keywords" content="kitware, CDash, Open-Source, CMake, ITK, VTK" />
+</head>
+<body>
+
+<div id="bg">
+<div id="frame">
+  <div id="banner">
+    
+    <div id="search">
+      <form id="form1" method="post" action="/cgi-bin/htsearch">
+        <input name="searchtext" type="text" class="searchfield" id="searchtext" value="Search" />
+      </form>
+</div>
+    <div id="nav">      
+      <ul id="MenuBar1" class="MenuBarHorizontal">
+        <li><a class="MenuBarItemSubmenu" href="#">HOME</a>
+            <ul>
+              <li><a href="copyright.html">Copyright</a></li>
+              <li><a href="news.html">News</a></li>
+							<li><a href="http://www.cmake.org">CMake</a></li>
+							<li><a href="http://www.kitware.com">Kitware</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="MenuBarItemSubmenu">CDASH</a>
+          <ul>
+					  <li><a href="http://public.kitware.com/CDash">CDash live</a></li>
+            <li><a href="install.html">Install</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+            <li><a href="support.html">Support</a></li>
+          </ul>
+          </li>
+        <li><a class="MenuBarItemSubmenu" href="#">DEVELOPERS</a>
+            <ul>
+              <li><a href="http://public.kitware.com/Bug">Bug Tracker</a> </li>
+              <li><a href="mailinglist.html">Mailing list</a></li>
+              <li><a href="../solutions/midascase.html">Wiki</a></li>
+						  <li><a href="CMakeBook.html">CMake Book</a></li>	
+            </ul>
+        </li>
+      </ul>
+      </div>
+    <div id="logo"><img src="img/logo.png" alt="" width="301" height="100" border="0" usemap="#Map" />
+<map name="Map" id="Map">
+  <area shape="poly" coords="5,82,5,5,94,32,296,32,294,81" href="../index.html" alt="Home" />
+</map></div>
+  </div>
+  <div id="ContentBg">
+    <div id="Content">
+      <div id="ContentTxtProd"><img src="img/header_cdash.png" alt="" width="368" height="63" /><br />
+      CDash allows software projects to be tested at multiple sites in multiple configurations (hardware, operating systems, compilers, etc.). 
+			Results from a build/test sequence are transmitted to a central server (i.e., the CDash server) 
+			using standard internet protocols. 
+			The server produces concise dashboards, summarizing the current state of a software system. 
+			The dashboards link to detailed reports on inter- and intra- configuration results. 
+			Testing results are tracked over time, allowing developers to trace the history of development.
+			Good examples of a CDash are the <a href="http://public.kitware.com/CDash/index.php?project=CMake">CMake quality dashboard</a> 
+			and the <a href="http://public.kitware.com/CDash/index.php?project=VTK">VTK quality dashboard</a> .				
+		  </div>
+      <div id="ContentImgProd"><a href="http://public.kitware.com/CDash/"><img BORDER=0 src="img/cdash.png" alt="product" width="405" height="321" /></a></div>
+      <br class="clear" />
+      <br />
+    
+<div id="ContentTabProd">
+  <div id="TabbedPanels1" class="TabbedPanels">
+    <ul class="TabbedPanelsTabGroup">
+      <li class="TabbedPanelsTab" tabindex="0">Technical Specifications</li>
+      <li class="TabbedPanelsTab" tabindex="0">Download</li>
+      <li class="TabbedPanelsTab" tabindex="0">License</li>
+      <li class="TabbedPanelsTab" tabindex="0">Purchase</li>
+    </ul>
+    <div class="TabbedPanelsContentGroup">
+      <div class="TabbedPanelsContent">
+        <p><strong>CDash Features</strong></p>
+        <ul>
+          <li>Client/Server model for testing and reporting</li>
+					<li>Separation of data from presentation using XML and XSLT</li>
+          <li>Interactive dashboards with content updated in real-time</li>
+          <li>Summarization of build logs to highlight any errors and warnings</li>
+          <li>Comparison of testing results across configurations</li>
+          <li>Multiple sites can contribute testing results</li>
+					<li>Empowers developers to test software in an extreme programming environment</li>
+          <li>Email notifications can be sent to developers when errors occur</li>
+        </ul>
+				<p><strong>System requirements</strong></p>
+        <ul>
+          <li>MySQL database (5.x and higher)</li>
+          <li>PHP (5.0 recommended)</li>
+          <li>XSL module for PHP</li>
+          <li>cURL module for PHP (for site statistics)</li>
+					<li>GD module for PHP (for regression tests)</li>
+        </ul>
+      </div>
+      <div class="TabbedPanelsContent">
+			<a href="download/cdash-1.0.1.zip">Cross platform installation</a>
+			</div>
+      <div class="TabbedPanelsContent">
+        <p><strong>Single Users (authoring) license</strong></p>
+        <blockquote>
+          <p>$350 for 1 license<br />
+            Create   content / application and use on a single machine<br />
+            includes 30-day technical   support</p>
+        </blockquote>
+        <p><strong>Run-time (distribute) license</strong></p>
+        <blockquote>
+          <p>$5000 for 1   license<br />
+            Create   content / applications on a single machine, use anywhere<br />
+            includes 30-day   technical support</p>
+        </blockquote>
+      </div>
+      <div class="TabbedPanelsContent">
+        <p><strong>You may purchase   ActiViz/COM by any of the following methods:</strong></p>
+        <ul>
+          <li>Purchase from our <a href="http://store.yahoo.com/kitware/activizcom.html">on-line store</a>. </li>
+          <li>Fax: fill out the <a href="/orderform.html">order form</a> and fax it to (518) 371 - 3971. </li>
+          <li>Phone: call us at (518) 371   - 3971 to place your order. </li>
+          <li>Mail: fill out the <a href="/orderform.html">order form</a> and mail it to us at:
+            <blockquote>
+                <blockquote>
+                  <blockquote>
+                    <p>Kitware, Inc. <br />
+                      28   Corporate Drive<br />
+                      Suite 204<br />
+                      Clifton Park, NY 12065 </p>
+                  </blockquote>
+                </blockquote>
+            </blockquote>
+          </li>
+        </ul>
+        <p><br />
+          As indicated on the   order form, payment made be made via credit card (Visa/Mastercard or American   Express), check/money order (in $ US drawn on a US branch), or US purchase   order. </p>
+        <p>Please make sure that you   include contact information (a full name and an email address or phone number)   so that we may give you a product key code for your purchase. We will contact   you with this information within one business day of having received your   order.</p>
+      </div>
+      <div class="TabbedPanelsContent">Download</div>
+    </div>
+  </div>
+  <br />
+      </div>
+
+   
+<br class="clear" />
+    <br />
+    </div>
+  </div>
+  <div id="footer"><br />&copy;2008 Copyright Kitware, Inc.</div>
+</div>
+</div>
+<script type="text/javascript">
+<!--
+var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+//-->
+</script>
+
+</body>
+</html>
