@@ -61,17 +61,30 @@
   <div id="ContentBg">
     <div id="Content">
       <div id="ContentTxtProdWide"><img src="img/header_cdash_installation.png" alt="" width="368" height="63" /><br />
-        <p><strong>A little piece of CDash history</strong> </p>
-        Copyright (c) 2008, Kitware Inc. <br />
-All rights reserved. <br />
-<br />
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-<ul>
-  <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. </li>
-  <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. </li>
-  <li>Neither the name of Kitware Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. </li>
-</ul>
-<p> THIS SOFTWARE IS PROVIDED BY Kitware Inc. ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Kitware Inc. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. </p>
+   <p><strong>CDash Requirements</strong> </p>
+  <ul> 
+  <li>MySQL database (5.x and higher)</li>
+   <li>PHP (5.0 recommended)</li>
+   <li>XSL module for PHP</li>
+   <li>cURL module for PHP (for site statistics)</li>
+   <li>GD module for PHP (for regression tests)</li>
+ </ul>
+<p><strong>Installation Steps</strong> </p>
+Note: it is assumed that the MySQL table <b>cdash</b> will be accessible by the MySQL user <b>cdash</b>.
+
+ <ol> 
+  <li>Checkout CDash using SVN</li>
+   <li>Edit the <b>config.php</b> file to connect to the MySQL server and database.</li>
+   <li>If the MySQL user 'cdash' has enough privileges to create tables skip the next step.</li>
+   <li>If the MySQL user 'cdash' doesn't have enought privileges to create tables<br>
+  as a superuser, create a table 'cdash' and give permission to the MySQL user 'cdash'.</li>
+   <li>
+  Use your favorite web-browser and point it to your installation directory (i.e. http://mywebsite.com/CDash).</li>
+  <li>
+  Follow the online installation script.
+  </li>
+ </ol>
+ 
       </div>
       <br class="clear" />
       <br />
