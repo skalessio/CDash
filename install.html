@@ -61,7 +61,7 @@
   <div id="ContentBg">
     <div id="Content">
       <div id="ContentTxtProdWide"><img src="img/header_cdash_installation.png" alt="" width="368" height="63" /><br />
-   <p><strong>CDash Requirements</strong> </p>
+  <strong>CDash Requirements</strong>
   <ul> 
   <li>MySQL database (5.x and higher)</li>
    <li>PHP (5.0 recommended)</li>
@@ -69,10 +69,9 @@
    <li>cURL module for PHP (for site statistics)</li>
    <li>GD module for PHP (for regression tests)</li>
  </ul>
-<p><strong>Installation Steps</strong> </p>
-Note: it is assumed that the MySQL table <b>cdash</b> will be accessible by the MySQL user <b>cdash</b>.
-
- <ol> 
+<p><strong>Installation Steps<br />
+</strong>Note: it is assumed that the MySQL table <b>cdash</b> will be accessible by the MySQL user <b>cdash</b>. </p>
+<ol> 
   <li>Checkout CDash using SVN</li>
    <li>Edit the <b>config.php</b> file to connect to the MySQL server and database.</li>
    <li>If the MySQL user 'cdash' has enough privileges to create tables skip the next step.</li>
@@ -84,14 +83,20 @@ Note: it is assumed that the MySQL table <b>cdash</b> will be accessible by the 
   Follow the online installation script.
   </li>
  </ol>
- 
+ <p><strong>Testing the Installation</strong> </p>
+ <ol>
+ <li>Download CMake from <a href="http://www.cmake.org">www.cmake.org</a>.</li>
+ <li>Download the <a href="download/CDashTest.zip">C++ test project (CDashTest)</a>.</li>
+ <li>Create a project named <b>'test'</b> as an administrator in CDash.</li>
+ <li>Download the CTestConfig.cmake file from the CDash website (after you created the project) or modify the one 
+ located in the <a href="download/CDashTest.zip">CDashTest</a> project source directory.</li>
+ <li>Run CMake on CDashTest to configure your project.</li>
+ <li>Run 'make Experimental'.</li>
+ <li>Go to your CDash project page and you should see your submission.</li>
+ </ol>
       </div>
       <br class="clear" />
       <br />
-    
-
-
- 
   </div>
   <div id="footer"><br />&copy;2008 Copyright Kitware, Inc.</div>
 </div>

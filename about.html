@@ -60,25 +60,121 @@
   </div>
   <div id="ContentBg">
     <div id="Content">
-      <div id="ContentTxtProdWide"><img src="img/header_cdash_about.png" alt="" width="368" height="63" /><br />
-        <p><strong>A little piece of CDash history</strong> </p>
-        Copyright (c) 2008, Kitware Inc. <br />
-All rights reserved. <br />
-<br />
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+      <div id="ContentTxtProdWide"><img src="img/header_cdash_about.png" alt="" width="368" height="63" />
+        <p>CDash is an open source, web-based software testing server. CDash aggregates,
+analyzes and displays the results of software testing processes submitted
+from clients located around the world. Developers depend on CDash to convey
+the state of a software system, and to continually improve its quality. CDash
+is a part of a larger software process that integrates Kitware's CMake,
+CTest, and CPack tools, as well as other external packages used to design,
+manage and maintain large scale software systems.</p>
+<p><strong>A Brief History of CDash</strong> </p>
+        <p>CDash has grown from the practical need to create simple, low overhead
+software process tools that scale gracefully to a large size. These tools
+have emerged to support the development of several open source projects
+including VTK (The Visualization Toolkit), ITK (The Insight Segmentation and
+Registration Toolkit), ParaView (the Parallel Visualization Application),
+Slicer (a 3D medical image analysis tool), and BatchMake (scriptable,
+distributed batch processing tool).</p>
+<p>
+The beginnings of the practical software process (PSP) as epitomized by CDash
+were in the early 1990's with the development of VTK. As this system was
+created, it became clear that a regression testing system was needed to
+maintain the quality of the software. Ken Martin, one of the principle
+authors of VTK, established a rudimentary system that was run manually to
+periodically evaluate the state of the software. While this process enabled
+the rapid development of VTK, it was run only sporadically, typically in
+preparation for a release of the software. Although this approach worked well
+to identify software faults, due to the elapsed time between testing runs, it
+was often difficult to pinpoint exactly what software change had introduced a
+fault. Thus some of the early lessons learned are that testing must occur
+frequently and on a regular basis.</p>
+<p>
+Soon after the development of this testing process, a GE corporate program
+known as the six-sigma process was introduced throughout the company
+(initially the original VTK authors developed the software on their own time,
+with the permission of GE, while employees of GE Corporate R&D). This quality
+initiative motivated the members of the Computer Graphics and Systems Program
+to extend the software testing process in a variety of ways including:
 <ul>
-  <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. </li>
-  <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. </li>
-  <li>Neither the name of Kitware Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. </li>
+<li>automation of the testing process;</li>
+<li>addition of new testing procedures such as dynamic memory analysis, code coverage, 
+   print-self, and execution time;</li>
+<li>formalizing the notion of testing clients and testing dashboards.</li>
 </ul>
-<p> THIS SOFTWARE IS PROVIDED BY Kitware Inc. ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Kitware Inc. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. </p>
-      </div>
+
+As a result of this effort, the testing dashboard became the center of the
+software process. The basic notion is that testing clients run through a test
+suite on a regular basis and then post their results to the testing server,
+i.e., the dashboard. Developers then viewed the dashboard to monitor the
+software, paying particular attention to the changes they made and the
+affects they had on the system. The dashboards were also configured to send
+email when faults were detected, notifying developers so that corrections
+could happen rapidly.</p>
+<p>
+Since that time, the PSP has continued its evolution towards a comprehensive
+software process. In 1999, Dr. Terry Yoo at the National Library of Medicine
+established the ITK program, and had the foresight to fund the development of
+software tools as well as medical image analysis algorithms. From this work
+Kitware developed the cross-platform build tool CMake, and eventually CTest,
+a software testing client; while at GE Bill Lorensen, Jim Miller and others
+developed DART, one of the earliest dashboard servers. Later on DART2 was
+developed by Jim and Dan Blezek using Java-based web tecnologies, and
+addressing the installation and configuration issues of DART. DART2, as well
+as the cross-platform packaging tool CPack, were developed as part of the
+NAMIC (National Alliance of Medical Image Computing) initiative. CDash is the
+latest in this distinguished line of dashboard servers. It is a response to
+the communities request for PHP-based server using newer web tools such as
+Ajax, and extends the lessons learned from DART and DART2. Besides receiving
+support from NAMIC and ITK, CDash has also benefitted from the generosity of
+Sandia National Labs, who use Kitware's VTK and ParaView tools extensively in
+their own work. The CDash development was spearheaded by Julien Jomier of
+Kitware, with contributions from many others including Bill Hoffman and Ken
+Martin also of Kitware.
+</p>
+
+<p><strong>Kitware's Practical Software Process</strong> </p>
+Kitware's Practical Software Process has grown organically over more than a
+decade of developing large scale, scientific software systems such as VTK and
+ITK. It is a low-overhead, streamlined process that results in high-quality
+software systems. Rooted in the concepts of extreme programming and
+test-driven development, the PSP has benefited from the contributions of many
+dozens of individuals scattered around the globe. Besides the GE, Kitware,
+VTK and ITK communities and sponsors listed above, many individuals
+exemplified by Alexander Neundorf (assisted with the CMake/KDE port) and
+Andrew Maclean at the University of Sydney (systems evaluater and tester)
+have and continue to contribute to its development.
+<p>
+In recent years the PSP has grown to consist of several tools developed by
+Kitware and its partners, as well as external tools adopted into the software
+process. These tools include:
+
+<ul>
+<li><a href="http://www.cmake.org">CMake</a> for cross-platform development,</li>
+<li>CDash the testing dashboard server,</li>
+<li><a href="http://www.cmake.org">CTest</a> the testing client,</li>
+<li><a href="http://www.cmake.org">CPack</a> the cross-platform packaging tool,</li>
+<li><a href="http://public.kitware.com/KWStyle">KWStyle</a> the configurable coding style evaluation tool,</li>
+<li>Doxygen for documentation generation,</li>
+<li>Mantis a bug tracking system,</li>
+<li>dynamic memory analysis tools including ValGrind and Purify,</li>
+<li>and code coverage tools such as gcov and BullsEye.</li>
+</ul>
+
+For further information about the software testing process the following papers and
+presentation provide additional details:
+
+<ul>
+<li><a href="download/SoftwareProcess.pdf">Schroeder, Ibanez, Martin. Software Process: The Key to Developing Robust, Reusable and
+  Maintainable Open-Source Software.</a></li>
+<li><a href="download/VTKExtremeTesting.pdf">Lorensen and Miller. Visualization Toolkit Extreme Testing</a>.</li>
+<li><a href="download/ExtremeTestingTalk.pdf">PPT Presentation: Lorensen and Miller. Visualization Toolkit Extreme
+  Testing: A Production Release Every Day</a>.</li>
+</ul>
+</div>
       <br class="clear" />
       <br />
-    
-
-
- 
+   
   </div>
   <div id="footer"><br />&copy;2008 Copyright Kitware, Inc.</div>
 </div>
