@@ -33,6 +33,10 @@
  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_mailing.png', sizingMethod='scale');
 }
 
+#header_cdash_participant {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_participant.png', sizingMethod='scale');
+}
 
 #pngfeature {
  background: transparent;

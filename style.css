@@ -40,6 +40,12 @@
   background: url(img/header_cdash_mailing.png) no-repeat left top;
 }
 
+#header_cdash_participant {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_participant.png) no-repeat left top;
+}
+
 #pngfeature {
   width: 405px;
   height: 321px;
