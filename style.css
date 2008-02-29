@@ -1,0 +1,47 @@
+#pngheader {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash.png) no-repeat left top;
+}
+
+#header_cdash_about {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_about.png) no-repeat left top;
+}
+
+#header_cdash_news {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_news.png) no-repeat left top;
+}
+
+#header_cdash_copyright {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_copyright.png) no-repeat left top;
+}
+
+#header_cdash_installation {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_installation.png) no-repeat left top;
+}
+
+#header_cdash_documentation {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_documentation.png) no-repeat left top;
+}
+
+#header_cdash_mailing {
+  width: 368px;
+  height: 63px;
+  background: url(img/header_cdash_mailing.png) no-repeat left top;
+}
+
+#pngfeature {
+  width: 405px;
+  height: 321px;
+  background: url(img/cdash.png) no-repeat left top;
+}

@@ -1,0 +1,40 @@
+#pngheader {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash.png', sizingMethod='scale');
+}
+
+#header_cdash_about {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_about.png', sizingMethod='scale');
+}
+
+#header_cdash_news {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_news.png', sizingMethod='scale');
+}
+
+#header_cdash_copyright {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_copyright.png', sizingMethod='scale');
+}
+
+#header_cdash_installation {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_installation.png', sizingMethod='scale');
+}
+
+#header_cdash_documentation {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_documentation.png', sizingMethod='scale');
+}
+
+#header_cdash_mailing {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/header_cdash_mailing.png', sizingMethod='scale');
+}
+
+
+#pngfeature {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/cdash.png', sizingMethod='scale');
+}
