@@ -10,6 +10,10 @@
 <script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
 <link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<!--[if lte IE 6]> 
+<link href="styleIE6.css" rel="stylesheet" type="text/css" />
+< ![endif]-->
 <meta name="Description" content="CDash is an open-source, distributed, software quality system. CDash allows software projects to be tested at multiple sites in multiple configurations (hardware, operating systems, compilers, etc.). Results from a build/test sequence are transmitted to a central server using standard internet protocols" />
 <meta name="Keywords" content="kitware, CDash, Open-Source, CMake, ITK, VTK" />
 </head>
@@ -60,7 +64,9 @@
   </div>
   <div id="ContentBg">
     <div id="Content">
-      <div id="ContentTxtProd"><img src="img/header_cdash.png" alt="" width="368" height="63" /><br />
+      <div id="ContentTxtProd">
+      <div id="pngheader"></div>
+      <br />
  CDash is an open source, web-based software testing server. CDash aggregates,
 analyzes and displays the results of software testing processes submitted
 from clients located around the world. Developers depend on CDash to convey
@@ -69,7 +75,9 @@ is a part of a larger software process that integrates Kitware's CMake,
 CTest, and CPack tools, as well as other external packages used to design,
 manage and maintain large-scale software systems.  Good examples of a CDash are the <a href="http://public.kitware.com/CDash/index.php?project=CMake">CMake quality dashboard</a> 
    and the <a href="http://public.kitware.com/CDash/index.php?project=VTK">VTK quality dashboard</a>.    </div>
-      <div id="ContentImgProd"><a href="http://public.kitware.com/CDash/"><img border=0 src="img/cdash.png" alt="product" width="405" height="321" /></a></div>
+      <div id="ContentImgProd"><a href="http://public.kitware.com/CDash/">
+      <div id="pngfeature"></div>
+      </a></div>
       <br class="clear" />
       <br />
     

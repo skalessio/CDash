@@ -10,6 +10,10 @@
 <script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
 <link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<!--[if lte IE 6]> 
+<link href="styleIE6.css" rel="stylesheet" type="text/css" />
+< ![endif]-->
 <meta name="Description" content="CDash is an open-source, distributed, software quality system. CDash allows software projects to be tested at multiple sites in multiple configurations (hardware, operating systems, compilers, etc.). Results from a build/test sequence are transmitted to a central server using standard internet protocols" />
 <meta name="Keywords" content="kitware, CDash, Open-Source, CMake, ITK, VTK" />
 </head>
@@ -53,14 +57,15 @@
         </li>
       </ul>
     </div>
-    <div id="logo"><img src="img/logo.png" alt="" width="301" height="100" border="0" usemap="#Map" />
+    <div id="logo">
 <map name="Map" id="Map">
   <area shape="poly" coords="5,82,5,5,94,32,296,32,294,81" href="../index.html" alt="Home" />
 </map></div>
   </div>
   <div id="ContentBg">
     <div id="Content">
-      <div id="ContentTxtProdWide"><img src="img/header_cdash_news.png" alt="" width="368" height="63" /><br />
+      <div id="ContentTxtProdWide">
+      <div id="header_cdash_news"></div><br />
         <p><strong>[2008-02-22]</strong> CDash website is online<br />
         <strong>[2008-02-01]</strong> CDash is <a href="http://public.kitware.com/CDash">live at Kitware</a></p>
         <p>&nbsp;</p>
@@ -78,7 +83,6 @@
 <script type="text/javascript">
 <!--
 var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
 //-->
 </script>
 
