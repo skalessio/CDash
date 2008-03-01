@@ -41,4 +41,5 @@
 #pngfeature {
  background: transparent;
  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/cdash.png', sizingMethod='scale');
+ cursor: pointer;
 }
