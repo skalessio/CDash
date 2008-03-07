@@ -16,6 +16,14 @@
 <![endif]-->
 <meta name="Description" content="CDash is an open-source, distributed, software quality system. CDash allows software projects to be tested at multiple sites in multiple configurations (hardware, operating systems, compilers, etc.). Results from a build/test sequence are transmitted to a central server using standard internet protocols" />
 <meta name="Keywords" content="kitware, CDash, Open-Source, CMake, ITK, VTK" />
+<script language="JavaScript">
+function SubmitSearch()
+{
+  var searchText = document.getElementById("searchtext").value;
+  window.location = "http://www.google.com/search?q=site%3Awww.cdash.org+"+searchText;
+  return false;
+}
+</script>
 </head>
 <body>
 
@@ -24,8 +32,8 @@
   <div id="banner">
     
     <div id="search">
-      <form id="form1" method="post" action="/cgi-bin/htsearch">
-        <input name="searchtext" type="text" class="searchfield" id="searchtext" value="Search" />
+       <form id="searchform" onSubmit="return SubmitSearch()">
+        <input name="searchtext" type="text" class="searchfield" id="searchtext" value="Search" onfocus="this.value=''"/>
       </form>
 </div>
     <div id="nav">      
