@@ -43,3 +43,9 @@
  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/cdash.png', sizingMethod='scale');
  cursor: pointer;
 }
+
+#projectLogo{
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/CDashLogoSmall.png', sizingMethod='scale');
+ cursor: pointer;
+}

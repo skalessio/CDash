@@ -51,3 +51,15 @@
   height: 321px;
   background: url(img/cdash.png) no-repeat left top;
 }
+
+#projectLogo{
+  display: block;
+  height: 50px;
+  width: 50px;
+  background: url(img/CDashLogoSmall.png) no-repeat left top;
+  position: relative;
+  top: 40px;
+  float: left;
+  left: 550px; 
+  text-align: right
+}
