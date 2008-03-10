@@ -27,11 +27,11 @@
  * want to style the TabbedPanels container.
  */
 .TabbedPanels {
-	margin: 0px;
-	padding: 0px;
-	float: left;
-	clear: none;
-	width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  clear: none;
+  width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
 }
 
 /* This is the selector for the TabGroup. The TabGroup container houses
@@ -44,8 +44,8 @@
  * want to style the TabGroup container.
  */
 .TabbedPanelsTabGroup {
-	margin: 0px;
-	padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 /* This is the selector for the TabbedPanelsTab. This container houses
@@ -65,23 +65,23 @@
  * to style this tab container.
  */
 .TabbedPanelsTab {
-	position: relative;
-	top: 1px;
-	float: left;
-	padding: 4px 10px;
-	margin: 0px 1px 0px 0px;
-	background-color: #ddd;
-	list-style: none;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #999;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	cursor: pointer;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: bold;
+  position: relative;
+  top: 1px;
+  float: left;
+  padding: 4px 10px;
+  margin: 0px 1px 0px 0px;
+  background-color: #ddd;
+  list-style: none;
+  border-left: solid 1px #CCC;
+  border-bottom: solid 1px #999;
+  border-top: solid 1px #999;
+  border-right: solid 1px #999;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.6em;
+  font-weight: bold;
 }
 
 /* This selector is an example of how to change the appearnce of a tab button
@@ -90,7 +90,7 @@
  * and exits the container.
  */
 .TabbedPanelsTabHover {
-	background-color: #ccc;
+  background-color: #ccc;
 }
 
 /* This selector is an example of how to change the appearance of a tab button
@@ -105,8 +105,8 @@
  * content panel so that it looks like the tab is part of the content panel.
  */
 .TabbedPanelsTabSelected {
-	background-color: #eee;
-	border-bottom: 1px solid #EEE;
+  background-color: #eee;
+  border-bottom: 1px solid #EEE;
 }
 
 /* This selector is an example of how to make a link inside of a tab button
@@ -115,8 +115,8 @@
  * ring around it, instead of the focus ring around the entire tab.
  */
 .TabbedPanelsTab a {
-	text-decoration: none;
-	color: #000000;
+  text-decoration: none;
+  color: #000000;
 }
 
 /* This is the selector for the ContentGroup. The ContentGroup container houses
@@ -129,12 +129,12 @@
  * want to style the ContentGroup container.
  */
 .TabbedPanelsContentGroup {
-	clear: both;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #CCC;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	background-color: #EEE;
+  clear: both;
+  border-left: solid 1px #CCC;
+  border-bottom: solid 1px #CCC;
+  border-top: solid 1px #999;
+  border-right: solid 1px #999;
+  background-color: #EEE;
 }
 
 /* This is the selector for the Content panel. The Content panel holds the
@@ -147,9 +147,9 @@
  * want to style the Content container.
  */
 .TabbedPanelsContent {
-	padding: 8px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
+  padding: 8px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.6em;
 }
 
 /* This selector is an example of how to change the appearnce of the currently
@@ -177,15 +177,15 @@
  * the group container to make it look like a list container.
  */
 .VTabbedPanels .TabbedPanelsTabGroup {
-	float: left;
-	width: 10em;
-	height: 20em;
-	background-color: #EEE;
-	position: relative;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #CCC;
+  float: left;
+  width: 10em;
+  height: 20em;
+  background-color: #EEE;
+  position: relative;
+  border-top: solid 1px #999;
+  border-right: solid 1px #999;
+  border-left: solid 1px #CCC;
+  border-bottom: solid 1px #CCC;
 }
 
 /* This selector disables the float property that is placed on each tab button
@@ -194,11 +194,11 @@
  * the TabGroup, and its top border from the TabGroup or tab button above it.
  */
 .VTabbedPanels .TabbedPanelsTab {
-	float: none;
-	margin: 0px;
-	border-top: none;
-	border-left: none;
-	border-right: none;
+  float: none;
+  margin: 0px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 /* This selector disables the float property that is placed on each tab button
@@ -207,17 +207,17 @@
  * the TabGroup, and its top border from the TabGroup or tab button above it.
  */
 .VTabbedPanels .TabbedPanelsTabSelected {
-	background-color: #EEE;
-	border-bottom: solid 1px #999;
+  background-color: #EEE;
+  border-bottom: solid 1px #999;
 }
 
 /* This selector floats the content panels for the widget so that they
  * render to the right of the tabbed buttons.
  */
 .VTabbedPanels .TabbedPanelsContentGroup {
-	clear: none;
-	float: left;
-	padding: 0px;
-	width: 30em;
-	height: 20em;
+  clear: none;
+  float: left;
+  padding: 0px;
+  width: 30em;
+  height: 20em;
 }
