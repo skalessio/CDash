@@ -44,6 +44,12 @@
  cursor: pointer;
 }
 
+#pngfeature2 {
+ background: transparent;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/cdashpro.png', sizingMethod='scale');
+ cursor: pointer;
+}
+
 #projectLogo{
  background: transparent;
  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='img/CDashLogoSmall.png', sizingMethod='scale');

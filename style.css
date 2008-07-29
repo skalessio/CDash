@@ -52,6 +52,12 @@
   background: url(img/cdash.png) no-repeat left top;
 }
 
+#pngfeature2 {
+  width: 405px;
+  height: 321px;
+  background: url(img/cdashpro.png) no-repeat left top;
+}
+
 #projectLogo{
   display: block;
   height: 50px;

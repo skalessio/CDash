@@ -18,6 +18,13 @@
 <meta name="Keywords" content="kitware, CDash, Open-Source, CMake, ITK, VTK" />
 
 <script language="JavaScript">
+var numBanners = 2;
+var banner = new Array();
+banner[0] = '<a href="http://www.cdash.org/CDash"><div id="pngfeature"></div></a>';
+banner[1] = '<a href="http://www.cdash.org/CDashPublic"><div id="pngfeature2"></div></a>';
+</script>
+
+<script language="JavaScript">
 function SubmitSearch()
 {
   var searchText = document.getElementById("searchtext").value;
@@ -87,7 +94,10 @@ CTest, and CPack tools, as well as other external packages used to design,
 manage and maintain large-scale software systems.  Good examples of a CDash are the <a href="http://www.cdash.org/CDash/index.php?project=CMake">CMake quality dashboard</a> 
    and the <a href="http://www.cdash.org/CDash/index.php?project=VTK">VTK quality dashboard</a>.    </div>
       <div id="ContentImgProd"><a href="http://www.cdash.org/CDash/">
-      <div id="pngfeature"></div>
+       <script language="JavaScript">
+      var bannerNum = Math.round(Math.random() * (numBanners-1));
+      document.write(banner[bannerNum]);
+      </script>
       </a></div>
       <br class="clear" />
       <br />
