@@ -113,6 +113,8 @@ function do_submit($fileHandleOrSubmissionId, $projectid, $expected_md5 = '', $d
     include 'config/config.php';
     $filehandle = getSubmissionFileHandle($fileHandleOrSubmissionId);
 
+    add_log('retrieved submission file handle ' . time(), 'do_submit', LOG_INFO);
+
     if ($filehandle === false) {
         // Logs will have already captured this issue at this point
         return false;
@@ -142,6 +144,7 @@ function do_submit($fileHandleOrSubmissionId, $projectid, $expected_md5 = '', $d
         $scheduleid = pdo_real_escape_numeric($_GET['clientscheduleid']);
     }
 
+    add_log('started parsing file handle ' . time(), 'do_submit', LOG_INFO);
     // Parse the XML file
     $handler = ctest_parse($filehandle, $projectid, $expected_md5, $do_checksum, $scheduleid);
     //this is the md5 checksum fail case
@@ -149,6 +152,7 @@ function do_submit($fileHandleOrSubmissionId, $projectid, $expected_md5 = '', $d
         //no need to log an error since ctest_parse already did
         return false;
     }
+    add_log('finished parsing file handle ' . time(), 'do_submit', LOG_INFO);
 
     // Send the emails if necessary
     if ($handler instanceof UpdateHandler) {

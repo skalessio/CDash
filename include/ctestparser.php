@@ -152,6 +152,8 @@ function parse_put_submission($filehandler, $projectid, $expected_md5)
         return false;
     }
 
+    add_log('started parsing put submission ' . time(), 'parse_put_submission', LOG_INFO);
+
     $buildfile_row = pdo_single_row_query(
         "SELECT * FROM buildfile WHERE md5='$expected_md5' LIMIT 1");
     if (empty($buildfile_row)) {
@@ -189,6 +191,8 @@ function parse_put_submission($filehandler, $projectid, $expected_md5)
     $buildfile->BuildId = $buildid;
     $buildfile->md5 = $expected_md5;
 
+    add_log('created buildfile, including handler ' . time(), 'parse_put_submission', LOG_INFO);
+
     // Include the handler file for this type of submission.
     $type = $buildfile_row['type'];
     $include_file = 'xml_handlers/' . $type . '_handler.php';
@@ -213,6 +217,8 @@ function parse_put_submission($filehandler, $projectid, $expected_md5)
     }
     $handler = new $className($buildid);
 
+    add_log('running parse ' . time(), 'parse_put_submission', LOG_INFO);
+
     // Parse the file.
     if ($handler->Parse($filename) === false) {
         throw new Exception('Failed to parse file ' . $filename);
@@ -231,6 +237,8 @@ function ctest_parse($filehandler, $projectid, $expected_md5 = '', $do_checksum 
     require_once 'include/common.php';
     require_once 'models/project.php';
     include 'include/version.php';
+
+    add_log('started ctest_parsing ' . time(), 'ctest_parse', LOG_INFO);
 
     global $CDASH_USE_LOCAL_DIRECTORY;
 
@@ -315,6 +323,8 @@ function ctest_parse($filehandler, $projectid, $expected_md5 = '', $do_checksum 
             'An XML submission from ' . $ip . ' to the project ' . get_project_name($projectid) . ' cannot be parsed. The content of the file is as follow: ' . $content);
         return false;
     }
+
+    add_log('starting xml parser ' . time(), 'ctest_parse', LOG_INFO);
 
     xml_set_element_handler($parser, array($handler, 'startElement'), array($handler, 'endElement'));
     xml_set_character_data_handler($parser, array($handler, 'text'));
