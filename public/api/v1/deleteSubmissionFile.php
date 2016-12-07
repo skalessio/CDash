@@ -36,7 +36,7 @@ if (is_array($CDASH_BERNARD_CONSUMERS_WHITELIST) &&
     header('HTTP/1.1 403 Forbidden');
     exit();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_REQUEST['filename'])) {
-    $filename = $CDASH_BACKUP_DIRECTORY . '/' . basename($_REQUEST['filename']);
+    $filename = $CDASH_BACKUP_DIRECTORY . '/' . basename(realpath($_REQUEST['filename']));
 
     if (file_exists($filename)) {
         $deleted = @unlink($filename);
