@@ -43,7 +43,7 @@ function pdo_single_row_query($qry)
     $num_rows = pdo_num_rows($result);
     if (0 !== $num_rows && 1 !== $num_rows) {
         add_log('error: at most 1 row should be returned, not ' . $num_rows,
-            'pdo_single_row_query', LOG_ERR);
+            'pdo_single_row_query', LOG_WARNING);
         add_log('warning: returning the first row anyway even though result ' .
             'contains ' . $num_rows . ' rows',
             'pdo_single_row_query', LOG_WARNING);
