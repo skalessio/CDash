@@ -24,7 +24,7 @@
 
   // Record timestamp for use by Angular.
   gulp.task('record-version', function() {
-    fsPath.writeFileSync('public/build/js/version.js', "angular.module('CDash').constant('VERSION', '" + version + "');");
+    fsPath.writeFileSync('public/awesomebuild/js/version.js', "angular.module('CDash').constant('VERSION', '" + version + "');");
   });
 
 
@@ -39,7 +39,7 @@
 
   gulp.task('clean', function () {
     return del.sync([
-      'public/build/*',
+      'public/awesomebuild/*',
       'public/js/CDash_*.min.js*'
     ]);
   });
@@ -52,7 +52,7 @@
              'public/js/linechart.js',
              'public/js/bulletchart.js',
              'public/js/cdash_angular.js',
-             'public/build/js/version.js',
+             'public/awesomebuild/js/version.js',
              'public/js/directives/**.js',
              'public/js/filters/**.js',
              'public/js/services/**.js',
@@ -117,25 +117,25 @@
   gulp.task('replace', function(){
     gulp.src(['public/views/*.html'])
         .pipe(replace('@@version', version))
-        .pipe(gulp.dest('public/build/views/'));
+        .pipe(gulp.dest('public/awesomebuild/views/'));
 
     gulp.src(['public/views/partials/*.html'])
         .pipe(replace('@@version', version))
         .pipe(rename(function (path) {
           path.basename += "_" + version;
         }))
-        .pipe(gulp.dest('public/build/views/partials/'));
+        .pipe(gulp.dest('public/awesomebuild/views/partials/'));
 
     gulp.src(['public/local/views/*.html'])
         .pipe(replace('@@version', version))
-        .pipe(gulp.dest('public/build/local/views/'));
+        .pipe(gulp.dest('public/awesomebuild/local/views/'));
 
     gulp.src(['public/local/views/partials*.html'])
         .pipe(replace('@@version', version))
         .pipe(rename(function (path) {
           path.basename += "_" + version;
         }))
-        .pipe(gulp.dest('public/build/local/views/partials/'));
+        .pipe(gulp.dest('public/awesomebuild/local/views/partials/'));
   });
 
 

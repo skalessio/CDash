@@ -2039,7 +2039,7 @@ function load_view($viewName)
     ) {
         readfile("build/local/views/$viewName.html");
     } else {
-        readfile("build/views/$viewName.html");
+        readfile("awesomebuild/views/$viewName.html");
     }
 }
 
