@@ -89,6 +89,7 @@ class GCovTarHandler
                     || !array_key_exists('Binary', $jsonDecoded)
                 ) {
                     DeleteDirectory($dirName);
+                    add_log('data.json had no source/binary dir: ' . $filename, 'GCovTarHandler::Parse', LOG_ERR);
                     return false;
                 }
                 $this->SourceDirectory = $jsonDecoded['Source'];
@@ -99,6 +100,7 @@ class GCovTarHandler
 
         if (empty($this->SourceDirectory) || empty($this->BinaryDirectory)) {
             DeleteDirectory($dirName);
+            add_log('source or binary directory were empty: ' . $filename, 'GCovTarHandler::Parse', LOG_ERR);
             return false;
         }
 
