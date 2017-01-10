@@ -25,7 +25,9 @@ class TruncateOutputTestCase extends KWWebTestCase
 
         // Submit our testing data.
         $rep  = dirname(__FILE__)."/data/TruncateOutput";
+        add_log('submitting insight example', 'testTruncateOutput', LOG_ERR);
         if (!$this->submission('InsightExample', "$rep/Build.xml")) {
+            add_log('failed to submit insight eample', 'testTruncateOutput', LOG_ERR);
             $this->fail("failed to submit Build.xml");
             $this->cleanup();
             return 1;
@@ -36,10 +38,17 @@ class TruncateOutputTestCase extends KWWebTestCase
             "SELECT id FROM build WHERE name='TruncateOutput'");
         $this->BuildId = $buildid_results['id'];
 
+        add_log('buildid is ' . $this->BuildId, 'testTruncateOutput', LOG_ERR);
+
         // Verify that the output was properly truncated.
         $this->get($this->url . "/api/v1/viewBuildError.php?buildid=" . $this->BuildId);
         $content = $this->getBrowser()->getContent();
+
         $jsonobj = json_decode($content, true);
+
+        add_log(print_r($jsonobj, true), 'testTruncateOutput', LOG_ERR);
+        add_log('expected: ' . print_r($this->Expected, true), 'testTruncateOutput', LOG_ERR);
+
         foreach ($jsonobj['errors'] as $error) {
             if ($error['stdoutput'] != $this->Expected) {
                 $this->fail("Expected $this->Expected, found " . $error['stdoutput']);
