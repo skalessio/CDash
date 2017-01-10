@@ -130,6 +130,8 @@ class BuildHandler extends AbstractHandler
             global $CDASH_LARGE_TEXT_LIMIT;
             $threshold = $CDASH_LARGE_TEXT_LIMIT;
 
+            add_log('threshold: ' . $threshold, 'testTruncateOutput', LOG_ERR);
+
             if ($threshold > 0 && isset($this->Error->StdOutput)) {
                 $chunk_size = $threshold / 2;
                 $outlen = strlen($this->Error->StdOutput);
@@ -214,6 +216,9 @@ class BuildHandler extends AbstractHandler
         } elseif ($parent == 'RESULT') {
             global $CDASH_LARGE_TEXT_LIMIT;
             $threshold = $CDASH_LARGE_TEXT_LIMIT;
+
+            add_log('threshold2: ' . $threshold, 'testTruncateOutput', LOG_ERR);
+
             $append = true;
 
             switch ($element) {
