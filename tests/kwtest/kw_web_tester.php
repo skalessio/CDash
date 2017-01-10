@@ -269,12 +269,6 @@ class KWWebTestCase extends WebTestCase
     {
         global $CDASH_BERNARD_SUBMISSION;
 
-        if ($CDASH_BERNARD_SUBMISSION) {
-            $cmd = 'php -f ' . dirname(dirname(dirname(__FILE__))) . '/public/submissionConsumer.php';
-            $dir = dirname(__FILE__);
-            exec(sprintf("%s > %s/consumeroutfile 2>&1 & echo $! > %s/consumerpid", $cmd, $dir, $dir));
-        }
-
         $url = $this->url . "/submit.php?project=$projectname";
         $result = $this->uploadfile($url, $file);
 
@@ -289,14 +283,6 @@ class KWWebTestCase extends WebTestCase
             $this->assertEqual($result, "\n");
             return false;
         }
-
-        if ($CDASH_BERNARD_SUBMISSION) {
-            if (($pid = file_get_contents($dir . '/consumerpid')) !== false) {
-                exec(sprintf('kill -9 %d', $pid));
-                unlink($dir . '/consumerpid');
-            }
-        }
-
         return true;
     }
 
