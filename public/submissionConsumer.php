@@ -19,7 +19,7 @@ class CDashSubmissionService
     public function doSubmit(DefaultMessage $message)
     {
         global $CDASH_BASE_URL, $CDASH_REMOTE_ADDR;
-
+        global $CDASH_LARGE_TEXT_LIMIT;
         include dirname(__DIR__) . '/config/config.php';
 
         // Since this could be running on a remote machine, spoof the IP
