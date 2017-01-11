@@ -18,14 +18,9 @@ class CDashSubmissionService
 {
     public function doSubmit(DefaultMessage $message)
     {
-
-
         global $CDASH_BASE_URL, $CDASH_REMOTE_ADDR;
-        global $CDASH_LARGE_TEXT_LIMIT;
 
-        echo 'threshold: ' . $CDASH_LARGE_TEXT_LIMIT . "\n";
         include dirname(__DIR__) . '/config/config.php';
-        echo 'threshold: ' . $CDASH_LARGE_TEXT_LIMIT;
 
         // Since this could be running on a remote machine, spoof the IP
         // to appear as the IP that actually submitted the build

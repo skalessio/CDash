@@ -270,11 +270,7 @@ class KWWebTestCase extends WebTestCase
         global $CDASH_BERNARD_SUBMISSION;
 
         $url = $this->url . "/submit.php?project=$projectname";
-        add_log('submitting to ' . $projectname, 'testTruncateOutput', LOG_ERR);
-
         $result = $this->uploadfile($url, $file);
-
-        add_log(print_r($result, true), 'testTruncateOutput', LOG_ERR);
 
         if ($CDASH_BERNARD_SUBMISSION) {
             sleep(1);
