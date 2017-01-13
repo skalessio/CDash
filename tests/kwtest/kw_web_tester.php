@@ -273,7 +273,7 @@ class KWWebTestCase extends WebTestCase
         $result = $this->uploadfile($url, $file);
 
         if ($CDASH_BERNARD_SUBMISSION) {
-            sleep(1);
+            sleep(5);
         }
 
         if ($this->findString($result, 'error') ||
@@ -300,6 +300,13 @@ class KWWebTestCase extends WebTestCase
         curl_close($ch);
         fclose($fp);
         unset($fp);
+
+        global $CDASH_BERNARD_SUBMISSION;
+
+        if ($CDASH_BERNARD_SUBMISSION) {
+            sleep(5);
+        }
+
         return $page;
     }
 
