@@ -90,6 +90,9 @@ if ($CDASH_BERNARD_SUBMISSION) {
             'do_checksum' => true,
             'submission_id' => 0, // The submit endpoint does not allow a submission_id
             'submission_ip' => $_SERVER['REMOTE_ADDR'])));
+
+        add_log('Submitted task ' . $buildSubmissionId . ' to task queue.', 'global:submit.php', LOG_DEBUG);
+
         echo '<cdash version="' . $CDASH_VERSION . "\">\n";
         echo " <status>OK</status>\n";
         echo " <message>Build submitted successfully.</message>\n";
