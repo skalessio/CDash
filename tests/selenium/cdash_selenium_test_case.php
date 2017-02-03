@@ -27,9 +27,9 @@ class CDashSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
     {
         global $argv;
         $this->setBrowser('*' . $argv[2]);
-        global $configure;
-        $this->setBrowserUrl($configure['webserver']);
-        $this->webPath = $configure['webpath'];
+        global $CDASH_SERVER, $CDASH_DIR_NAME;
+        $this->setBrowserUrl($CDASH_SERVER);
+        $this->webPath = $CDASH_DIR_NAME;
     }
 
     public function sleepWaitingForElement($element)

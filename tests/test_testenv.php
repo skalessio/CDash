@@ -24,9 +24,6 @@ class TestEnvTestCase extends KWWebTestCase
         global $cdashpath;
         $s = $s . 'cdashpath=[' . print_r($cdashpath, true) . "]\n";
 
-        global $configure;
-        $s = $s . 'configure=[' . print_r($configure, true) . "]\n";
-
         global $db;
         $s = $s . 'db=[' . print_r($db, true) . "]\n";
 

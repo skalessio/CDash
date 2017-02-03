@@ -11,8 +11,8 @@ class EmailTestCase extends KWWebTestCase
     {
         parent::__construct();
 
-        global $configure;
-        $this->url = $configure['urlwebsite'];
+        global $CDASH_BASE_URL;
+        $this->url = $CDASH_BASE_URL;
     }
 
     public function testSimple()

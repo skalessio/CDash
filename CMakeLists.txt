@@ -38,26 +38,6 @@ if(NOT DEFINED CDASH_BUILD_NAME)
   set(CDASH_BUILD_NAME "inner")
 endif()
 
-# turn the CDash into one that can be tested
-file(WRITE "${CDash_SOURCE_DIR}/tests/config.test.local.php"
-"<?php
-$configure = array(
-  'urlwebsite'       => '${CDASH_TESTING_URL}',
-  'webserver'        => 'http://${CDASH_SERVER}/',
-  'webpath'          => '/${CDASH_DIR_NAME}',
-  'outputdirectory'  => '${CDash_BINARY_DIR}/tmp',
-  'type'             => 'Nightly',
-  'site'             => '${CDASH_SITE}',
-  'buildname'        => '${CDASH_BUILD_NAME}',
-  'cdash'            => 'http://www.cdash.org/CDash',
-  'svnroot'          => '${CDash_SOURCE_DIR}',
-  'cdashpro'         => '${CDASH_PRO}',
-  'github_username'  => '${CDASH_GITHUB_USERNAME}',
-  'github_password'  => '${CDASH_GITHUB_PASSWORD}'
-  );
-?>
-")
-
 if(NOT CDASH_DB_TYPE)
   set(CDASH_DB_TYPE "mysql")
 endif(NOT CDASH_DB_TYPE)
@@ -168,6 +148,12 @@ $CDASH_BASE_URL = '${CDASH_TESTING_URL}';
 $CDASH_BERNARD_SUBMISSION = ${CDASH_BERNARD_SUBMISSION};
 $CDASH_BERNARD_DRIVER = ${CDASH_BERNARD_DRIVER};
 $CDASH_BERNARD_CONSUMERS_WHITELIST = ${CDASH_BERNARD_CONSUMERS_WHITELIST};
+$CDASH_PRO = '${CDASH_PRO}';
+$CDASH_SERVER = 'http://${CDASH_SERVER}/';
+$CDASH_DIR_NAME = '/${CDASH_DIR_NAME}';
+$CDASH_GITHUB_USERNAME = '${CDASH_GITHUB_USERNAME}';
+$CDASH_GITHUB_PASSWORD = '${CDASH_GITHUB_PASSWORD}';
+$CDASH_SVNROOT = '${CDash_SOURCE_DIR}';
 ?>
 ")
 

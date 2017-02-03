@@ -33,8 +33,8 @@ class AutoRemoveBuildsTestCase extends KWWebTestCase
     {
         $this->startCodeCoverage();
 
-        global $configure;
-        $dir = $configure['svnroot'];
+        global $CDASH_SVNROOT;
+        $dir = $CDASH_SVNROOT;
 
         chdir($dir);
         $argv[0] = 'autoRemoveBuilds.php';

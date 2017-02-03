@@ -21,8 +21,8 @@ class ImportBuildsTestCase extends KWWebTestCase
     {
         $this->startCodeCoverage();
 
-        global $configure;
-        $dir = $configure['svnroot'];
+        global $CDASH_SVNROOT;
+        $dir = $CDASH_SVNROOT;
         chdir($dir);
         $argv[0] = 'importBuilds.php';
         $xmlDirectory = dirname(__FILE__) . '/data/SubProjectExample';

@@ -83,9 +83,3 @@ if (PHP_OS == 'WINNT') {
 } elseif (PHP_OS == 'Darwin') {
     $isMacOSX = true;
 }
-
-// DO NOT EDIT AFTER THIS LINE
-$localConfig = dirname(__FILE__) . '/config.test.local.php';
-if (file_exists($localConfig)) {
-    include $localConfig;
-}

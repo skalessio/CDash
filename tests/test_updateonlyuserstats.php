@@ -32,7 +32,7 @@ class UpdateOnlyUserStatsTestCase extends KWWebTestCase
     public function testSetup()
     {
         // Create a project with GitHub credentials named CDash.
-        global $configure;
+        global $CDASH_GITHUB_USERNAME, $CDASH_GITHUB_PASSWORD;
         $settings = [
             'Name' => 'CDash',
             'Description' => 'CDash',
@@ -42,8 +42,8 @@ class UpdateOnlyUserStatsTestCase extends KWWebTestCase
             'repositories' => [[
                 'url' => 'https://github.com/Kitware/CDash',
                 'branch' => 'master',
-                'username' => $configure['github_username'],
-                'password' => $configure['github_password']
+                'username' => $CDASH_GITHUB_USERNAME,
+                'password' => $CDASH_GITHUB_PASSWORD
             ]]
         ];
         $this->ProjectId = $this->createProject($settings);

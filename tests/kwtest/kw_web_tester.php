@@ -38,12 +38,9 @@ class KWWebTestCase extends WebTestCase
     {
         parent::__construct();
 
-        global $configure;
-        $this->url = $configure['urlwebsite'];
-        $this->cdashpro = false;
-        if (isset($configure['cdashpro']) && $configure['cdashpro'] == '1') {
-            $this->cdashpro = true;
-        }
+        global $CDASH_BASE_URL, $CDASH_PRO;
+        $this->url = $CDASH_BASE_URL;
+        $this->cdashpro = ($CDASH_PRO == '1');
 
         global $db;
         $this->db = new database($db['type']);

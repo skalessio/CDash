@@ -18,8 +18,8 @@ class GithubCommentTestCase extends KWWebTestCase
 
     public function testGithubPRComment()
     {
+        global $CDASH_GITHUB_USERNAME, $CDASH_GITHUB_PASSWORD;
         echo "1. testGithubPRComment\n";
-        global $configure;
 
         $this->login();
 
@@ -33,8 +33,8 @@ class GithubCommentTestCase extends KWWebTestCase
             'repositories' => [[
                 'url' => 'https://github.com/Kitware/CDash',
                 'branch' => 'master',
-                'username' => $configure['github_username'],
-                'password' => $configure['github_password']
+                'username' => $CDASH_GITHUB_USERNAME,
+                'password' => $CDASH_GITHUB_PASSWORD
             ]]
         ];
         $this->ProjectId = $this->createProject($settings);
@@ -43,7 +43,6 @@ class GithubCommentTestCase extends KWWebTestCase
         }
 
         // Setup subprojects by submitting the Project.xml file.
-        global $configure;
         // Submit the file.
         $url = $this->url . '/submit.php?project=CDash';
         $result = $this->uploadfile($url,
@@ -116,7 +115,7 @@ class GithubCommentTestCase extends KWWebTestCase
 
     public function submitPullRequestFile($file)
     {
-        global $configure;
+        global $CDASH_GITHUB_USERNAME, $CDASH_GITHUB_PASSWORD;
         // Submit the file.
         $url = $this->url . '/submit.php?project=CDash';
         $result = $this->uploadfile($url, $file);
@@ -134,7 +133,7 @@ class GithubCommentTestCase extends KWWebTestCase
         $delete_url =
             "https://api.github.com/repos/Kitware/CDash/issues/comments/$commentID";
         $userpwd =
-            $configure['github_username'] . ':' . $configure['github_password'];
+            $CDASH_GITHUB_USERNAME . ':' . $CDASH_GITHUB_PASSWORD;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $delete_url);
