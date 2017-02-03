@@ -236,6 +236,7 @@ class Build
                 VALUES ('" . $this->Id . "','" . $duration . "')";
         }
         if (!pdo_query($query)) {
+            add_log('duration was: ' . $duration, 'Build:SaveTotalTestsTime', LOG_WARN);
             add_last_sql_error('Build:SaveTotalTestsTime', $this->ProjectId, $this->Id);
             return false;
         }
