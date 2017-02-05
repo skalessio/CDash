@@ -22,12 +22,6 @@ class DeleteDailyUpdateTestCase extends KWWebTestCase
 
     public function testDeleteDailyUpdate()
     {
-        //double check that it's the testing database before doing anything hasty...
-        if ($this->databaseName !== 'cdash4simpletest') {
-            $this->fail("can only test on a database named 'cdash4simpletest'");
-            return 1;
-        }
-
         //remove the daily update entry for some projects so that subsequent tests
         //will cover dailyupdate.php more thoroughly
 

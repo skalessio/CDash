@@ -1,5 +1,6 @@
 set(testing_dir "${CDash_SOURCE_DIR}/tests")
 set(binary_testing_dir "${CDash_BINARY_DIR}/tests")
+set(server_port 20200)
 
 # function to add a new PHP based coverage test to CDash
 #
@@ -12,6 +13,12 @@ function(add_php_test TestName)
     ${TestName} PROPERTIES
     FAIL_REGULAR_EXPRESSION ".*Failures: [1-9]+.*;.*Exceptions: [1-9]+.*"
   )
+  set_property(TEST ${TestName} PROPERTY ENVIRONMENT
+    "CDASH_SERVER_PORT=${server_port}"
+    "CDASH_DB_NAME=cdash_test_${TestName}"
+    )
+  math(EXPR next_server_port "${server_port} + 1")
+  set(server_port ${next_server_port} PARENT_SCOPE)
 endfunction(add_php_test)
 function(add_configured_php_test TestName)
   add_test(
@@ -22,6 +29,8 @@ function(add_configured_php_test TestName)
     ${TestName} PROPERTIES
     FAIL_REGULAR_EXPRESSION ".*Failures: [1-9]+.*;.*Exceptions: [1-9]+.*"
   )
+  math(EXPR next_server_port "${server_port} + 1")
+  set(server_port ${next_server_port} PARENT_SCOPE)
 endfunction(add_configured_php_test)
 
 add_php_test(install)

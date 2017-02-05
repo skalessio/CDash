@@ -38,8 +38,14 @@ class KWWebTestCase extends WebTestCase
     {
         parent::__construct();
 
-        global $CDASH_BASE_URL, $CDASH_PRO;
+        global $CDASH_BASE_URL, $CDASH_PRO, $CDASH_SERVER_PORT;
         $this->url = $CDASH_BASE_URL;
+
+        // incredibly fragile url parsing
+        $url_parts = parse_url($this->url);
+        $this->url = sprintf('%s://%s:%d%s', $url_parts['scheme'], $url_parts['host'],
+                             $CDASH_SERVER_PORT, $url_parts['path']);
+
         $this->cdashpro = ($CDASH_PRO == '1');
 
         global $db;
@@ -54,6 +60,42 @@ class KWWebTestCase extends WebTestCase
         global $CDASH_LOG_FILE, $cdashpath;
         $this->logfilename = $CDASH_LOG_FILE;
         $this->configfilename = $cdashpath . '/config/config.local.php';
+
+
+        $this->databaseName = $db['name'];
+    }
+
+    public function setUp()
+    {
+        //drop any old testing database before testing install
+        $this->db->drop($this->databaseName);
+
+        // Create the database
+        if ($this->db->type == 'pgsql') {
+            if (!$this->db->create($this->databaseName)) {
+                $dbcreated = false;
+                $msg = 'error query(CREATE DATABASE)';
+                die('Error' . ' File: ' . __FILE__ . ' on line: ' . __LINE__ . ": $msg");
+                return false;
+            }
+        }
+
+        $this->setConnectionTimeout(99999);
+        $ret = $this->get($this->url . 'install.php');
+
+        if (!$this->setFieldByName('admin_email', 'simpletest@localhost')) {
+            $this->fail('Set admin email returned false');
+            return 1;
+        }
+        if (!$this->setFieldByName('admin_password', 'simpletest')) {
+            $this->fail('Set admin password returned false');
+            return 1;
+        }
+        $this->clickSubmitByName('Submit');
+        if (strpos($this->getBrowser()->getContentAsText(), 'successfully created') === false) {
+            $this->fail("'successfully created' not found when expected\nHere's what I see instead:\n");
+            return 1;
+        }
     }
 
     public function startCodeCoverage()
@@ -354,7 +396,7 @@ class KWWebTestCase extends WebTestCase
         global $CDASH_BASE_URL;
         try {
             $response = $client->request('POST',
-                    $CDASH_BASE_URL . '/user.php',
+                    $this->url . '/user.php',
                     ['form_params' => [
                         'login' => $username,
                         'passwd' => $password,
@@ -367,7 +409,7 @@ class KWWebTestCase extends WebTestCase
         // Create project.
         try {
             $response = $client->request('POST',
-                    $CDASH_BASE_URL . '/api/v1/project.php',
+                    $this->url . '/api/v1/project.php',
                     ['json' => [$submit_button => true, 'project' => $settings]]);
         } catch (GuzzleHttp\Exception\ClientException $e) {
             $this->fail($e->getMessage());
@@ -423,7 +465,7 @@ class KWWebTestCase extends WebTestCase
         global $CDASH_BASE_URL;
         try {
             $response = $client->request('POST',
-                    $CDASH_BASE_URL . '/user.php',
+                    $this->url . '/user.php',
                     ['form_params' => [
                         'login' => 'simpletest@localhost',
                         'passwd' => 'simpletest',
@@ -437,7 +479,7 @@ class KWWebTestCase extends WebTestCase
         $project_array = array('Id' => $projectid);
         try {
             $response = $client->delete(
-                    $CDASH_BASE_URL . '/api/v1/project.php',
+                    $this->url . '/api/v1/project.php',
                     ['json' => ['project' => $project_array]]);
         } catch (GuzzleHttp\Exception\ClientException $e) {
             $this->fail($e->getMessage());

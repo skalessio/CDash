@@ -14,6 +14,8 @@
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
 
+global $CDASH_DB_NAME;
+
 function setRememberMeCookie($userId)
 {
     $cookiename = 'CDash-' . $_SERVER['SERVER_NAME'];
@@ -46,6 +48,7 @@ function databaseAuthenticate($email, $password, $SessionCachePolicy, $rememberm
     include dirname(__DIR__) . '/config/config.php';
 
     $db = pdo_connect("$CDASH_DB_HOST", "$CDASH_DB_LOGIN", "$CDASH_DB_PASS");
+    global $CDASH_DB_NAME;
     pdo_select_db("$CDASH_DB_NAME", $db);
     $sql = 'SELECT id,password FROM ' . qid('user') . " WHERE email='" . pdo_real_escape_string($email) . "'";
     $result = pdo_query("$sql");
@@ -235,6 +238,7 @@ function authenticate($email, $password, $SessionCachePolicy, $rememberme)
     if ($CDASH_USE_LDAP) {
         // If the user is '1' we use it to login
         $db = pdo_connect("$CDASH_DB_HOST", "$CDASH_DB_LOGIN", "$CDASH_DB_PASS");
+        global $CDASH_DB_NAME;
         pdo_select_db("$CDASH_DB_NAME", $db);
         $query = pdo_query('SELECT id FROM ' . qid('user') . " WHERE email='$email'");
         if ($query && pdo_num_rows($query) > 0) {
@@ -258,6 +262,7 @@ function auth($SessionCachePolicy = 'private_no_expire')
 {
     include dirname(__DIR__) . '/config/config.php';
     $loginid = 1231564132;
+    global $CDASH_DB_NAME;
 
     if (isset($CDASH_EXTERNAL_AUTH) && $CDASH_EXTERNAL_AUTH
         && isset($_SERVER['REMOTE_USER'])
