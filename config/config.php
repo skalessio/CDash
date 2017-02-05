@@ -283,3 +283,14 @@ $localConfig = dirname(__FILE__) . '/config.local.php';
 if ((strpos(__FILE__, 'config.local.php') === false) && file_exists($localConfig)) {
     include $localConfig;
 }
+
+// Set any CDASH_* global via environment vars
+foreach (get_defined_vars()['GLOBALS'] as $key => $value) {
+    if (strpos($key, 'CDASH_') === 0) {
+        $value = getenv($key);
+
+        if ($value !== false) {
+            $$key = $value;
+        }
+    }
+}
