@@ -505,11 +505,12 @@ function get_email_summary($buildid, $errors, $errorkey, $maxitems, $maxchars, $
             return $information;
         };
 
-        $information .= $AddTestsToEmail($build->GetFailedTests($maxitems), 'Tests failing');
+        $information .= $AddTestsToEmail($build->GetFailedTests($maxitems), 'Tests not passing');
         if ($emailtesttimingchanged) {
             $information .= $AddTestsToEmail($build->GetFailedTimeStatusTests($maxitems, $testtimemaxstatus), 'Tests failing time status');
         }
-        $information .= $AddTestsToEmail($build->GetTimedoutTests($maxitems), 'Test timeouts');
+
+        // $information .= $AddTestsToEmail($build->GetTimedoutTests($maxitems), 'Test timeouts');
         $information .= $AddTestsToEmail($build->GetNotRunTests($maxitems), 'Tests not run');
     } elseif ($errorkey == 'dynamicanalysis_errors') {
         $da_query = pdo_query("SELECT name,id FROM dynamicanalysis WHERE status IN ('failed','notrun') AND buildid="
@@ -1134,7 +1135,7 @@ function send_email_to_address($emailaddress, $emailtext, $Build, $Project)
                 $messagePlainText .= "Errors: $value\n";
                 break;
             case 'test_errors':
-                $messagePlainText .= "Tests failing: $value\n";
+                $messagePlainText .= "Tests not passing: $value\n";
                 break;
             case 'dynamicanalysis_errors':
                 $messagePlainText .= "Dynamic analysis tests failing: $value\n";

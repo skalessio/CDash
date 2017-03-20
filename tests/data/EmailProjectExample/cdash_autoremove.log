@@ -12,10 +12,10 @@ Site: Dash20.kitware
 Build Name: Win32-MSVC2009
 Build Time: 2009-02-23T05:02:03 EST
 Type: Nightly
-Tests failing: 5
+Tests not passing: 5
 
 
-*Tests failing* (first 5)
+*Tests not passing* (first 5)
 DashboardSendTest (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
 SystemInfoTest (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
 FileActionsTest (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)

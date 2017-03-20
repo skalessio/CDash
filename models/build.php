@@ -1049,7 +1049,9 @@ class Build
      */
     public function GetFailedTests($maxitems = 0)
     {
-        $criteria = "b2t.status = 'failed' AND t.details NOT LIKE '%%Timeout%%'";
+        // $criteria = "b2t.status = 'failed' AND t.details NOT LIKE '%%Timeout%%'";
+        $criteria = "b2t.status = 'failed'";
+
         return $this->GetTests($criteria, $maxitems);
     }
 

@@ -11,10 +11,10 @@ Site: godel.sandia.gov
 Build Name: Linux-GCC-4.1.2-SERIAL_RELEASE
 Build Time: 2009-08-06T08:19:56 EDT
 Type: Nightly
-Tests failing: 1
+Tests not passing: 1
 
 
-*Tests failing*
+*Tests not passing*
 NOX_FiniteDifferenceIsorropiaColoring (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
 
 
@@ -33,10 +33,10 @@ Site: godel.sandia.gov
 Build Name: Linux-GCC-4.1.2-SERIAL_RELEASE
 Build Time: 2009-08-06T08:19:56 EDT
 Type: Nightly
-Tests failing: 1
+Tests not passing: 1
 
 
-*Tests failing*
+*Tests not passing*
 NOX_FiniteDifferenceIsorropiaColoring (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
 
 
