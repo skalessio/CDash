@@ -498,7 +498,9 @@ function get_email_summary($buildid, $errors, $errorkey, $maxitems, $maxchars, $
             $information .= "\n";
 
             foreach ($tests as $test) {
-                $info = $test['name'] . ' (' . $serverURI . '/testDetails.php?test=' . $test['id'] . '&build=' . $buildid . ")\n";
+                // $info = $test['name'] . ' (' . $serverURI . '/testDetails.php?test=' . $test['id'] . '&build=' . $buildid . ")\n";
+                //  . ' (' . $serverURI . '/testDetails.php?test=' . $test['id'] . '&build=' . $buildid . ")\n";
+                $info = "{$test['name']} {$test['details']} ({$serverURI}/testDetails.php?test={$test['id']}&build={$buildid}\n";
                 $information .= substr($info, 0, $maxchars);
             }
             $information .= "\n";

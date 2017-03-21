@@ -14,8 +14,8 @@ Tests not passing: 2
 
 
 *Tests not passing*
-SleepTimer1 (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
-SleepTimer2 (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
+SleepTimer1 Completed (Timeout) (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
+SleepTimer2 Completed (Timeout) (http://<NA>/<NA>/testDetails.php?test=<NA>&build=<NA>)
 
 
 -CDash on <NA>
