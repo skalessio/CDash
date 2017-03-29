@@ -24,9 +24,15 @@ set(CDASH_GITHUB_PASSWORD "" CACHE STRING "Github user's password")
 
 get_filename_component(CDASH_DIR_NAME_DEFAULT ${CDash_SOURCE_DIR} NAME)
 set(CDASH_DIR_NAME "${CDASH_DIR_NAME_DEFAULT}" CACHE STRING "URL suffix. Ie 'http://<CDASH_SERVER>/<CDASH_DIR_NAME>'")
-message("CDASH_DIR_NAME = ${CDASH_DIR_NAME}")
 
-set(CDASH_TESTING_URL "http://${CDASH_SERVER}/${CDASH_DIR_NAME}")
+set(CDASH_PROTOCOL http CACHE STRING "CDash server protocol")
+if (CDASH_PROTOCOL STREQUAL "https")
+  set(CDASH_USE_HTTPS "1")
+else()
+  set(CDASH_USE_HTTPS "0")
+endif()
+
+set(CDASH_TESTING_URL "${CDASH_PROTOCOL}://${CDASH_SERVER}/${CDASH_DIR_NAME}")
 message("Using url: ${CDASH_TESTING_URL}")
 make_directory("${CDash_BINARY_DIR}/tmp")
 
@@ -43,7 +49,7 @@ file(WRITE "${CDash_SOURCE_DIR}/tests/config.test.local.php"
 "<?php
 $configure = array(
   'urlwebsite'       => '${CDASH_TESTING_URL}',
-  'webserver'        => 'http://${CDASH_SERVER}/',
+  'webserver'        => '${CDASH_PROTOCOL}://${CDASH_SERVER}/',
   'webpath'          => '/${CDASH_DIR_NAME}',
   'outputdirectory'  => '${CDash_BINARY_DIR}/tmp',
   'type'             => 'Nightly',
@@ -157,6 +163,7 @@ $CDASH_DB_PORT = '${CDASH_DB_PORT}';
 $CDASH_DB_PASS = '${CDASH_DB_PASS}';
 $CDASH_DB_TYPE = '${CDASH_DB_TYPE}';
 $CDASH_DB_CONNECTION_TYPE = '${CDASH_DB_CONNECTION_TYPE}';
+$CDASH_USE_HTTPS = '${CDASH_USE_HTTPS}';
 $CDASH_COVERAGE_DIR = '${CDASH_COVERAGE_DIR}';
 $CDASH_LOG_LEVEL = LOG_DEBUG;
 $PHP_EXE = '${PHP_EXE}';
