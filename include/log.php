@@ -188,6 +188,7 @@ function add_log($text, $function, $type = LOG_INFO, $projectid = 0, $buildid = 
             $handler->getFormatter()->ignoreEmptyContextAndExtra();
         } else {
             if ($CDASH_TESTING_MODE) {
+                global $CDASH_DATA_ROOT_DIRECTORY;
                 if (substr($CDASH_DATA_ROOT_DIRECTORY, 0, 5) === 'gs://') {
                     $filePermission = null;
                 } else {
