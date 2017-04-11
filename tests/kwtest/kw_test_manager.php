@@ -59,12 +59,14 @@ class TestManager
             }
         }
 
-        global $CDASH_BACKUP_DIRECTORY;
-        $filenames = glob("$CDASH_BACKUP_DIRECTORY/*");
-        foreach ($filenames as $filename) {
-            if (is_file($filename)) {
-                cdash_testsuite_unlink($filename);
+        global $CDASH_BACKUP_DIRECTORY, $CDASH_DATA_ROOT_DIRECTORY;
+        if ($handle = opendir($CDASH_BACKUP_DIRECTORY)) {
+            while (false !== ($entry = readdir($handle))) {
+                if (is_file("$CDASH_DATA_ROOT_DIRECTORY/$entry")) {
+                    cdash_testsuite_unlink("$CDASH_DATA_ROOT_DIRECTORY/$entry");
+                }
             }
+            closedir($handle);
         }
     }
 
