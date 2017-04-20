@@ -777,25 +777,25 @@ if (isset($_GET['upgrade-2-6'])) {
 
         // Add crc32 column to configure table.
         AddTableField('configure', 'crc32', 'bigint(20)', 'BIGINT', '0');
-
-        // Populate build2configure table.
-        PopulateBuild2Configure('configure', 'build2configure');
-
-        // Add unique constraint to crc32 column.
-        if ($db_type === 'pgsql') {
-            pdo_query('ALTER TABLE configure ADD UNIQUE (crc32)');
-        } else {
-            pdo_query('ALTER TABLE configure ADD UNIQUE KEY (crc32)');
-        }
-
-        // Remove columns from configure that have been moved to build2configure.
-        RemoveTableField('configure', 'buildid');
-        RemoveTableField('configure', 'starttime');
-        RemoveTableField('configure', 'endtime');
-
-        // Change configureerror to use configureid instead of buildid.
-        UpgradeConfigureErrorTable('configureerror', 'build2configure');
     }
+    // Populate build2configure table.
+    PopulateBuild2Configure('configure', 'build2configure');
+
+    // Add unique constraint to crc32 column.
+    if ($db_type === 'pgsql') {
+        pdo_query('ALTER TABLE configure ADD UNIQUE (crc32)');
+    } else {
+        pdo_query('ALTER TABLE configure ADD UNIQUE KEY (crc32)');
+    }
+
+    // Remove columns from configure that have been moved to build2configure.
+    RemoveTableField('configure', 'buildid');
+    RemoveTableField('configure', 'starttime');
+    RemoveTableField('configure', 'endtime');
+
+    // Change configureerror to use configureid instead of buildid.
+    UpgradeConfigureErrorTable('configureerror', 'build2configure');
+
 
     // Set the database version
     setVersion();
