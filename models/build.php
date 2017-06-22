@@ -296,7 +296,7 @@ class Build
         }
 
         $query = pdo_query(
-            'SELECT 
+            'SELECT
                 projectid,
                 starttime,
                 endtime,
@@ -310,7 +310,7 @@ class Build
                 testfailed,
                 generator,
                 command
-            FROM build 
+            FROM build
             WHERE id=' . qnum($buildid));
 
         if (!$query) {
@@ -651,35 +651,33 @@ class Build
     /** Get the build id from its name */
     public function GetIdFromName($subproject)
     {
-        $buildid = 0;
-
         // Make sure subproject name and id fields are set:
         //
         $this->SetSubProject($subproject);
 
-        if ($this->SubProjectId != 0) {
-            $build = pdo_query('SELECT id FROM build, subproject2build' .
-                ' WHERE projectid=' . qnum($this->ProjectId) .
-                ' AND siteid=' . qnum($this->SiteId) .
-                " AND name='" . $this->Name . "'" .
-                " AND stamp='" . $this->Stamp . "'" .
-                ' AND build.id=subproject2build.buildid' .
-                ' AND subproject2build.subprojectid=' . qnum($this->SubProjectId));
-        } else {
-            $build = pdo_query('SELECT id FROM build' .
-                ' WHERE projectid=' . qnum($this->ProjectId) .
-                ' AND siteid=' . qnum($this->SiteId) .
-                " AND name='" . $this->Name . "'" .
-                " AND stamp='" . $this->Stamp . "'");
-        }
+        $stmt = null;
+        $params = [$this->ProjectId, $this->SiteId, $this->Name, $this->Stamp];
 
-        if (pdo_num_rows($build) > 0) {
-            $build_array = pdo_fetch_array($build);
-            $this->Id = $build_array['id'];
+        if ($this->SubProjectId != 0) {
+            $stmt = $this->PDO->prepare(
+                'SELECT id FROM build
+                JOIN subproject2build ON subproject2build.buildid = build.id
+                WHERE projectid = ? AND siteid = ? AND name = ? AND
+                      stamp = ? AND subprojectid = ?');
+            $params[] = $this->SubProjectId;
+        } else {
+            $stmt = $this->PDO->prepare(
+                'SELECT id FROM build
+                WHERE projectid = ? AND siteid = ? AND name = ? AND stamp = ?
+                AND parentid IN (0, -1)');
+        }
+        pdo_execute($stmt, $params);
+        $id = $stmt->fetchColumn();
+        if ($id > 0) {
+            $this->Id = $id;
             return $this->Id;
         }
 
-        add_last_sql_error('GetIdFromName', $this->ProjectId);
         return 0;
     }
 
@@ -2500,6 +2498,7 @@ class Build
                 bf.workingdirectory,
                 bfd.stderror,
                 bfd.stdoutput,
+                bfd.type,
                 bfd.exitcondition,
                 sp2b.subprojectid,
                 sp.name subprojectname
