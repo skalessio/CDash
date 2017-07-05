@@ -4,6 +4,8 @@ machine:
     version: 5.5.11
 
 dependencies:
+  pre:
+    - curl -s https://raw.githubusercontent.com/chronogolf/circleci-google-chrome/master/use_chrome_stable_version.sh | bash
   cache_directories:
     - ~/.composer/cache
 
