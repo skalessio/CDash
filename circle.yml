@@ -20,7 +20,8 @@ dependencies:
     - test -n "${CIRCLE_PR_REPONAME}" || composer config --global --no-interaction github-oauth.github.com $GITHUB_OAUTH_TOKEN
     - composer install --no-interaction --no-progress --prefer-dist
     - npm install
-    - node_modules/.bin/webdriver-manager update -- versions.chrome 3.0
+    - cp tests/circle/protractor.config.json node_modules/protractor/config.json
+    - node_modules/.bin/webdriver-manager update
     - createdb -O ubuntu cdash4simpletest
 
 test:
