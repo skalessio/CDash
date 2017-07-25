@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  cdash:
+    build: .
+    container_name: cdash-host
+    depends_on:
+      - mysql
+    networks:
+      - cdash_host_net
+    links:
+      - mysql:mysql
+    ports:
+     - "8080:80"
+    volumes:
+     - .:/home/kitware/cdash
+  mysql:
+    image: "mysql/mysql-server:5.5"
+    container_name: cdash-mysql-host
+    networks:
+      - cdash_host_net
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: 'cdash4simpletest'
+      MYSQL_ROOT_HOST: '%'
+
+networks:
+  cdash_host_net:
+    driver: bridge
