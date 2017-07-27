@@ -43,11 +43,16 @@ $response['displaylabels'] = $project->DisplayLabels;
 
 $date = get_dashboard_date_from_build_starttime($build->StartTime, $project->NightlyTime);
 
+$response = begin_JSON_response();
 get_dashboard_JSON($project->Name, $date, $response);
 $response['title'] = "$project->Name : Dynamic Analysis";
 
 $menu = [];
-$menu['back'] = "index.php?project=$project->Name&date=$date";
+if ($build->GetParentId() > 0) {
+    $menu['back'] = 'index.php?project=' . urlencode($project->Name) . "&parentid={$build->GetParentId()}";
+} else {
+    $menu['back'] = 'index.php?project=' . urlencode($project->Name) . "&date=$date";
+}
 
 $previousbuildid = get_previous_buildid_dynamicanalysis($build->ProjectId, $build->SiteId, $build->Type, $build->Name, $build->StartTime);
 if ($previousbuildid > 0) {
@@ -97,7 +102,14 @@ while ($DA_row = $DA_stmt->fetch()) {
         'SELECT * FROM dynamicanalysisdefect WHERE dynamicanalysisid = ?');
     pdo_execute($defects_stmt, [$dynid]);
     // Initialize defects array as zero for each type.
-    $defects = array_fill(0, count($defect_types), 0);
+    $num_types = count($defect_types);
+    if ($num_types > 0) {
+        // Work around a bug in older versions of PHP where the 2nd argument to
+        // array_fill must be greater than zero.
+        $defects = array_fill(0, count($defect_types), 0);
+    } else {
+        $defects = [];
+    }
     while ($defects_row = $defects_stmt->fetch()) {
         // Figure out how many defects of each type were found for this test.
         $defect_type = $defects_row['type'];
