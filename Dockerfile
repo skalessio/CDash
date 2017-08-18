@@ -3,7 +3,6 @@ FROM php:7.0-apache
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash
 RUN apt-get install -y \
     cmake \
-    dbus-x11 \
     default-jre \
     fonts-liberation \
     gconf-service \
@@ -23,11 +22,7 @@ RUN apt-get install -y \
     sudo \
     unzip \
     wget \
-    xfonts-cyrillic \
     xdg-utils \
-    xfonts-75dpi \
-    xfonts-100dpi \
-    xvfb \
     zip
 
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
