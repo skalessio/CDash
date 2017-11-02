@@ -190,15 +190,12 @@ function add_log($text, $function, $type = LOG_INFO, $projectid = 0, $buildid = 
             $handler = new SyslogHandler('cdash', LOG_USER, $minLevel);
             $handler->getFormatter()->ignoreEmptyContextAndExtra();
         } else {
-            if ($CDASH_TESTING_MODE) {
-                global $CDASH_DATA_ROOT_DIRECTORY;
-                if (substr($CDASH_DATA_ROOT_DIRECTORY, 0, 5) === 'gs://') {
+            if ($config->get('CDASH_TESTING_MODE')) {
+                if (substr($config->get('CDASH_DATA_ROOT_DIRECTORY'), 0, 5) === 'gs://') {
                     $filePermission = null;
                 } else {
                     $filePermission = 0666;
                 }
-            if ($config->get('CDASH_TESTING_MODE')) {
-                $filePermission = 0666;
             } else {
                 $filePermission = 0664;
             }
