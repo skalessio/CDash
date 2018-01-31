@@ -2,6 +2,35 @@
 
 This document is incomplete and is subject to change.
 
+## Definitions
+
+### Topic
+
+A user subscribes to topics. Examples of topics are test failures, label subscriptions, build fixes, builds from a particular build group, etc. Any criteria that triggers a message shall be known as a topic. The topic class accepts a model as an argument, which is the the subject of the topic, giving the topic class the ability to query the model for criteria. For example the TestFailureTopic accepts a Build model as its subject giving it the ability to query if the build has any test failures. Topics whose subject queries are successful are added to subscriptions. 
+ 
+### Subscription
+
+The subscription is a collection of topics, the subscriber to those topics (the user), and the notification for the subscriber.
+
+### Notification
+
+The notification the message containing the information provided by the topic. This is usually an email, but we are abstracting this concept to support other messaging systems such as SMS and Slack.
+
+### Preferences
+
+The topics a subscriber is subscribed to.
+
+### Message Decorator
+
+A decorator decorates the message with text as described by the topic.
+  
+
+## High Level Overview
+
+When a build is submitted the XML handler responsible for creating the build submission is passed to a subscription builder. The subscription builder determines the build's project users and the topics that they are subscribed, then proceeds to check the build submission for criteria matching that of each of the subscribers topics. Once the subscriptions have been created and notification builder, in our first case, an email builder is created, it is passed the subscriptions and an email message for each subscriber is constructed. Those messages are then passed to a transport for delivery.
+
+## Interfaces
+
 A good place to start for making sense of the planned CDash messaging system refactor is with its interfaces. There 
 are a number of interfaces in the CDash/Collection and CDash/Messaging packages. Below is a list of some of them and 
 their purpose.
@@ -14,7 +43,7 @@ PreferencesInterface | Insure that implementing classes provide the ability read
 TopicInterface | Insure that implementing classes provide the ability to determine if a user has subscribed to any of the details in an incoming CDash submission. | BuildTypeTopic, ExpectedSiteSubmitTopic, LabelTopic
 DecoratorInterface | Implements a version of the decorator pattern for textual decoration of messages based on topics. | BuildTypeDecorator, ExpectedSiteSubmitDecorator, LabelTopicDecorator
 
-## High Level Overview
+## Code Examples
 
 Steps to build a collection of notifications:
 
@@ -171,7 +200,7 @@ public function createNotifications()
           $body = DecoratorFactory::createFromTopic($topic);
           $body
             ->setDecorator($body)
-            ->decorateWith($topic->getData();
+            ->decorateWith($topic->getData());
        }
        $footer = DecorateFactory::create('Footer');
        $footer
