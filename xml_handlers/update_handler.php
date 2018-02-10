@@ -241,4 +241,9 @@ class UpdateHandler extends AbstractHandler implements ActionableBuildInterface
         $collection->add($this->Build);
         return $collection;
     }
+
+    public function getProjectId()
+    {
+        // TODO: Implement getProjectId() method.
+    }
 }

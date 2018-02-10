@@ -2640,6 +2640,11 @@ class Build
         return $this->TestCollection;
     }
 
+    public function GetSummaryUrl()
+    {
+        // TODO: create method
+    }
+
     /**
      * Return the Id of the Build matching the given $uuid,
      * or FALSE if no such build exists.
