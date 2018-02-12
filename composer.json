@@ -29,7 +29,8 @@
     "suin/php-rss-writer": "~1.4",
     "swiftmailer/swiftmailer": "~5.4",
     "sendgrid/sendgrid": "5.0.4",
-    "google/cloud": "^0.25.0"
+    "google/cloud": "^0.25.0",
+    "php-di/php-di": "^5.4"
   },
   "require-dev": {
     "ext-gd": "*",
