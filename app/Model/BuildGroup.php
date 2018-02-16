@@ -17,6 +17,9 @@ namespace CDash\Model;
 
 class BuildGroup
 {
+    const NIGHTLY = 'Nightly';
+    const EXPERIMENTAL = 'Experimental';
+
     private $Id;
     private $ProjectId;
     private $Name;
