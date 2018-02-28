@@ -106,36 +106,43 @@ class SubProject
             return false;
         }
 
-        // If there is no build in the subproject we remove
-        $query = pdo_query('SELECT count(*) FROM subproject2build WHERE subprojectid=' . qnum($this->Id));
-        if (!$query) {
-            add_last_sql_error('SubProject Delete');
+        // If there is no build in the subproject we remove it.
+        $stmt = $this->PDO->prepare(
+            'SELECT COUNT(*) FROM subproject2build WHERE subprojectid = :id');
+        if (!pdo_execute($stmt, [':id' => $this->Id])) {
             return false;
         }
-        $query_array = pdo_fetch_array($query);
-        if ($query_array[0] == 0) {
+        $num_builds = $stmt->fetchColumn();
+        if ($num_builds == 0) {
             $keephistory = false;
         }
 
         // Regardless of whether or not we're performing a "soft delete",
         // we should remove any dependencies on this subproject.
-        pdo_query(
-            'DELETE FROM subproject2subproject WHERE dependsonid=' . qnum($this->Id));
+        $stmt = $this->PDO->prepare(
+            'DELETE FROM subproject2subproject WHERE dependsonid = :id');
+        pdo_execute($stmt, [':id' => $this->Id]);
 
         if (!$keephistory) {
-            pdo_query('DELETE FROM subproject2build WHERE subprojectid=' . qnum($this->Id));
-            pdo_query('DELETE FROM subproject2subproject WHERE subprojectid=' . qnum($this->Id));
-            pdo_query('DELETE FROM subproject WHERE id=' . qnum($this->Id));
+            $stmt = $this->PDO->prepare(
+                'DELETE FROM subproject2build WHERE subprojectid = :id');
+            pdo_execute($stmt, [':id' => $this->Id]);
+            $stmt = $this->PDO->prepare(
+                'DELETE FROM subproject2subproject WHERE subprojectid = :id');
+            pdo_execute($stmt, [':id' => $this->Id]);
+            $stmt = $this->PDO->prepare(
+                'DELETE FROM subproject WHERE id = :id');
+            pdo_execute($stmt, [':id' => $this->Id]);
         } else {
             $endtime = gmdate(FMT_DATETIME);
-            $query = 'UPDATE subproject SET ';
-            $query .= "endtime='" . $endtime . "'";
-            $query .= ' WHERE id=' . qnum($this->Id) . '';
-            if (!pdo_query($query)) {
-                add_last_sql_error('SubProject Delete');
+            $stmt = $this->PDO->prepare(
+                'UPDATE subproject SET endtime = :endtime WHERE id = :id');
+            if (!pdo_execute($stmt,
+                             [':endtime' => $endtime, ':id' => $this->Id])) {
                 return false;
             }
         }
+        return true;
     }
 
     /** Return if a subproject exists */
