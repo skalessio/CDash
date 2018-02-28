@@ -59,10 +59,16 @@ class SubProject
 
         $this->Id = $id;
 
-        $row = pdo_single_row_query(
-            'SELECT name, projectid, groupid, path, position FROM subproject
-       WHERE id=' . qnum($this->Id) . " AND endtime='1980-01-01 00:00:00'");
-        if (empty($row)) {
+        $stmt = $this->PDO->prepare(
+            "SELECT name, projectid, groupid, path, position
+            FROM subproject
+            WHERE id = :id AND endtime='1980-01-01 00:00:00'");
+
+        if (!pdo_execute($stmt, [':id' => $this->Id])) {
+            return false;
+        }
+        $row = $stmt->fetch();
+        if (!$row) {
             return false;
         }
 
