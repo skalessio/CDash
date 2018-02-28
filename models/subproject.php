@@ -16,7 +16,9 @@
 
 // It is assumed that appropriate headers should be included before including this file
 
-include_once 'models/subprojectgroup.php';
+require_once 'include/pdo.php'
+require_once 'models/subprojectgroup.php';
+use CDash\Database;
 
 /** Main subproject class */
 class SubProject
@@ -37,7 +39,7 @@ class SubProject
         $this->Position = 0;
         $this->Name = '';
         $this->Path = '';
-        $this->PDO = get_link_identifier()->getPdo();
+        $this->PDO = Database::getInstance()->getPdo();
     }
 
     /** Function to get the id */
