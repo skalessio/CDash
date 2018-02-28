@@ -741,17 +741,13 @@ class SubProject
     /** Return a subproject object for a given file path and projectid. */
     public static function GetSubProjectFromPath($path, $projectid)
     {
-        $pdo = get_link_identifier()->getPdo();
-        $stmt = $pdo->prepare(
+        $stmt = $this->PDO->prepare(
             "SELECT id FROM subproject
             WHERE projectid = :projectid AND
             endtime = '1980-01-01 00:00:00' AND
             path != '' AND
             :path LIKE CONCAT('%',path,'%')");
-
-        $stmt->bindValue(':projectid', $projectid);
-        $stmt->bindValue(':path', $path);
-        pdo_execute($stmt);
+        pdo_execute($stmt, [':projectid' => $projectid, ':path' => $path]);
         $id = $stmt->fetchColumn();
         if (!$id) {
             add_log(
