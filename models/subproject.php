@@ -640,7 +640,7 @@ class SubProject
     {
         if ($this->Id < 1) {
             add_log(
-                "Id='" . $this->Id . "' not set",
+                "Id = '$this->Id' not set",
                 'SubProject::GetDependencies',
                 LOG_WARNING);
             return false;
@@ -651,17 +651,19 @@ class SubProject
             $date = gmdate(FMT_DATETIME);
         }
 
-        $project = pdo_query('SELECT dependsonid FROM subproject2subproject
-                          WHERE subprojectid=' . qnum($this->Id) . " AND
-                          starttime<='" . $date . "' AND (endtime>'" . $date . "' OR endtime='1980-01-01 00:00:00')"
+        $stmt = $this->PDO->prepare(
+            "SELECT dependsonid FROM subproject2subproject
+             WHERE subprojectid = :id AND
+                   starttime <= :date AND
+                   (endtime > :date OR endtime = '1980-01-01 00:00:00')");
+             $date
         );
-        if (!$project) {
-            add_last_sql_error('SubProject GetDependencies');
+        if (!pdo_execute($stmt, [':id' -> $this->Id, ':date' => $date])) {
             return false;
         }
-        $ids = array();
-        while ($project_array = pdo_fetch_array($project)) {
-            $ids[] = $project_array['dependsonid'];
+        $ids = [];
+        while ($row = $stmt->fetch()) {
+            $ids[] = $row['dependsonid'];
         }
         return $ids;
     }
