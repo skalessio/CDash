@@ -720,15 +720,21 @@ class SubProject
             return false;
         }
 
-        // Set the date of the dependency to be now
+        // Set the endtime of the dependency to be now.
         $now = gmdate(FMT_DATETIME);
-        $project = pdo_query("UPDATE subproject2subproject SET endtime='" . $now . "'
-                          WHERE subprojectid=" . qnum($this->Id) .
-            ' AND dependsonid=' . qnum($subprojectid) . " AND endtime='1980-01-01 00:00:00'");
-        if (!$project) {
-            add_last_sql_error('SubProject RemoveDependency');
+        $stmt = $this->PDO->prepare(
+            "UPDATE subproject2subproject SET endtime = :endtime
+            WHERE subprojectid = :id AND dependsonid = :dependsid AND
+                  endtime = '1980-01-01 00:00:00'");
+        $query_params = [
+            ':endtime' => $now,
+            ':id' => $this->Id,
+            ':dependsid' => $subprojectid
+        ];
+        if (!pdo_execute($stmt, $query_params)) {
             return false;
         }
+
         return true;
     }
 
