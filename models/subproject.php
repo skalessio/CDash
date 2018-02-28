@@ -338,10 +338,15 @@ class SubProject
     public function SetGroup($groupName)
     {
         $groupName = pdo_real_escape_string($groupName);
-        $row = pdo_single_row_query(
+        $stmt = $this->PDO->prepare(
             "SELECT id from subprojectgroup
-            WHERE name = '$groupName' AND endtime='1980-01-01 00:00:00'");
-        if (empty($row)) {
+            WHERE name = :groupname AND endtime='1980-01-01 00:00:00'");
+        if (!pdo_execute($stmt, [':groupname' => $groupName])) {
+            return false;
+        }
+
+        $groupid = $stmt->fetchColumn();
+        if (!$groupid) {
             // Create the group if it doesn't exist yet.
             $subprojectGroup = new SubProjectGroup();
             $subprojectGroup->SetName($groupName);
@@ -352,7 +357,7 @@ class SubProject
             $this->GroupId = $subprojectGroup->GetId();
             return true;
         }
-        $this->GroupId = $row['id'];
+        $this->GroupId = $groupid;
         return true;
     }
 
