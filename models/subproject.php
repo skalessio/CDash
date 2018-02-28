@@ -153,9 +153,11 @@ class SubProject
             return false;
         }
 
-        $query = pdo_query("SELECT count(*) FROM subproject WHERE id='" . $this->Id . "' AND endtime='1980-01-01 00:00:00'");
-        $query_array = pdo_fetch_array($query);
-        if ($query_array[0] > 0) {
+        $stmt = $this->PDO->prepare(
+            "SELECT COUNT(*) FROM subproject
+            WHERE id = :id AND endtime = '1980-01-01 00:00:00'");
+        pdo_execute($stmt, [':id' => $this->Id]);
+        if ($stmt->fetchColumn() > 0) {
             return true;
         }
         return false;
