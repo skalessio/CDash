@@ -676,27 +676,34 @@ class SubProject
         }
 
         // Check that the dependency doesn't exist
-        $project = pdo_query('SELECT count(*) FROM subproject2subproject WHERE subprojectid=' . qnum($this->Id) .
-            ' AND dependsonid=' . qnum($subprojectid) . " AND endtime='1980-01-01 00:00:00'"
-        );
-        if (!$project) {
-            add_last_sql_error('SubProject AddDependency');
+        $stmt = $this->PDO->prepare(
+            "SELECT COUNT(*) FROM subproject2subproject
+            WHERE subprojectid = :id AND
+                  dependsonid = :dependsid AND
+                  endtime='1980-01-01 00:00:00'");
+        if (!pdo_execute($stmt,
+                         [':id' => $this->Id, ':dependsid' => $subprojectid])) {
+            return false;
+        }
+        $num_existing_depends = $stmt->fetchColumn();
+        if ($num_existing_depends > 0) {
             return false;
         }
 
-        $project_array = pdo_fetch_array($project);
-        if ($project_array[0] > 0) {
-            return false;
-        }
-
-        // Add the dependency
+        // Add the dependency.
         $starttime = gmdate(FMT_DATETIME);
         $endtime = '1980-01-01 00:00:00';
-        $project = pdo_query('INSERT INTO subproject2subproject (subprojectid,dependsonid,starttime,endtime)
-                         VALUES (' . qnum($this->Id) .
-            ',' . qnum($subprojectid) . ",'" . $starttime . "','" . $endtime . "')");
-        if (!$project) {
-            add_last_sql_error('SubProject AddDependency');
+        $stmt = $this->PDO->prepare(
+            'INSERT INTO subproject2subproject
+                (subprojectid, dependsonid, starttime, endtime)
+             VALUES (:id, :dependsid, :starttime, :endtime)');
+        $query_params = [
+            ':id' => $this->Id,
+             ':dependsid' => $subprojectid,
+             ':starttime' => $starttime,
+             ':endtime' => $endtime
+         ];
+        if (!pdo_execute($stmt, $query_params)) {
             return false;
         }
         return true;
