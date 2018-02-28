@@ -321,12 +321,16 @@ class SubProject
             return false;
         }
 
-        $row = pdo_single_row_query(
-            'SELECT groupid FROM subproject WHERE id=' . qnum($this->Id));
-        if (empty($row)) {
+        $stmt = $this->PDO->prepare(
+            'SELECT groupid FROM subproject WHERE id = :id');
+        if (!pdo_execute($stmt, ['id' => $this->Id])) {
             return false;
         }
-        $this->GroupId = $row['groupid'];
+        $groupid = $stmt->fetchColumn();
+        if (!$groupid) {
+            return false;
+        }
+        $this->GroupId = $groupid;
         return $this->GroupId;
     }
 
