@@ -383,11 +383,12 @@ class SubProject
         $this->Position = $position;
     }
 
-    /** Get the last submission of the subproject*/
+    /** Get the last submission of the SubProject. */
     public function GetLastSubmission()
     {
-        global $CDASH_SHOW_LAST_SUBMISSION;
-        if (!$CDASH_SHOW_LAST_SUBMISSION) {
+        use CDash\Config;
+        $config = Config::getInstance();
+        if (!$config->get('CDASH_SHOW_LAST_SUBMISSION')) {
             return false;
         }
 
@@ -395,22 +396,24 @@ class SubProject
             return false;
         }
 
-        $project = pdo_query('SELECT submittime FROM build,subproject2build,build2group,buildgroup WHERE subprojectid=' . qnum($this->Id) .
-            ' AND build2group.buildid=build.id AND build2group.groupid=buildgroup.id
-                           AND buildgroup.includesubprojectotal=1
-                           AND subproject2build.buildid=build.id ORDER BY submittime DESC LIMIT 1');
-        if (!$project) {
-            add_last_sql_error('SubProject GetLastSubmission');
-            return false;
-        }
-        $project_array = pdo_fetch_array($project);
-
-        if (!is_array($project_array) ||
-                !array_key_exists('submittime', $project_array)) {
+        $stmt = $this->PDO->prepare(
+            'SELECT submittime FROM build b,
+            JOIN subproject2build sp2b ON sp2b.buildid = b.id
+            JOIN build2group b2g ON b2g.buildid = b.id
+            JOIN buildgroup bg ON bg.id = b2g.groupid
+            WHERE sp2b.subprojectid = :id AND
+                  bg.includesubprojectotal = 1
+            ORDER BY submittime DESC LIMIT 1');
+        if (!pdo_execute($stmt, [':id' => $this->Id])) {
             return false;
         }
 
-        return date(FMT_DATETIMESTD, strtotime($project_array['submittime'] . 'UTC'));
+        $submittime = $stmt->fetchColumn();
+        if (!$submittime) {
+            return false;
+        }
+
+        return date(FMT_DATETIMESTD, strtotime($submittime . 'UTC'));
     }
 
     /** Encapsulate common logic for build queries in this class. */
