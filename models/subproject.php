@@ -263,13 +263,12 @@ class SubProject
             return false;
         }
 
-        $project = pdo_query('SELECT name FROM subproject WHERE id=' . qnum($this->Id));
-        if (!$project) {
-            add_last_sql_error('SubProject GetName');
+        $stmt = $this->PDO->prepare(
+            'SELECT name FROM subproject WHERE id = :id');
+        if (!pdo_execute($stmt, [':id' => $this->Id])) {
             return false;
         }
-        $project_array = pdo_fetch_array($project);
-        $this->Name = $project_array['name'];
+        $this->Name = $stmt->fetchColumn();
         return $this->Name;
     }
 
