@@ -14,14 +14,17 @@
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
 
+use CDash\Config;
+use CDash\Controller\Auth\Session;
+
 require_once dirname(__DIR__) . '/config/config.php';
 require_once 'auth/OAuth2Provider.php';
 
 class GoogleProvider extends OAuth2Provider
 {
-    public function __construct()
+    public function __construct(Session $session, Config $config)
     {
-        parent::__construct();
+        parent::__construct($session, $config);
         $this->AuthorizationOptions =
             [ 'scope' => ['https://www.googleapis.com/auth/userinfo.email'] ];
         if (array_key_exists('Google', $this->OAuth2Settings)) {

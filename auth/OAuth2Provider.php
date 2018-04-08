@@ -17,7 +17,9 @@
 require_once dirname(__DIR__) . '/config/config.php';
 require_once 'include/common.php';
 require_once 'models/user.php';
+
 use CDash\Config;
+use CDash\Controller\Auth\Session;
 
 class OAuth2Provider
 {
@@ -29,8 +31,9 @@ class OAuth2Provider
     protected $Token;
 
     private $Config;
+    private $Session;
 
-    public function __construct()
+    public function __construct(Session $session, Config $config)
     {
         $this->AuthorizationOptions = [];
         $this->OwnerDetails = null;

@@ -14,6 +14,9 @@
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
 
+use CDash\Config;
+use CDash\Controller\Auth\Session;
+
 require_once dirname(__DIR__) . '/config/config.php';
 require_once 'auth/OAuth2Provider.php';
 
@@ -21,9 +24,9 @@ class GitHubProvider extends OAuth2Provider
 {
     private $NameParts;
 
-    public function __construct()
+    public function __construct(Session $session, Config $config)
     {
-        parent::__construct();
+        parent::__construct($session, $config);
 
         $this->AuthorizationOptions = ['scope' => ['read:user', 'user:email']];
         $this->NameParts = null;
