@@ -13,15 +13,19 @@
   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
+namespace CDash\Middleware;
 
-require_once dirname(__DIR__) . '/config/config.php';
+require_once dirname(__DIR__) . '/../config/config.php';
 require_once 'include/common.php';
-require_once 'models/user.php';
 
 use CDash\Config;
 use CDash\Controller\Auth\Session;
+use CDash\Middleware\Oauth2Provider\OAuth2ProviderInterface;
+use CDash\Model\User;
+use CDash\System;
+use League\OAuth2\Client\Provider\AbstractProvider;
 
-class OAuth2Provider
+abstract class OAuth2Provider implements OAuth2ProviderInterface
 {
     public  $BaseUrl;
     public  $Valid;
@@ -29,62 +33,59 @@ class OAuth2Provider
     protected  $OwnerDetails;
     protected $Provider;
     protected $Token;
+    protected $AuthorizationOptions;
 
-    private $Config;
+    protected $Config;
     private $Session;
+    private $System;
 
-    public function __construct(Session $session, Config $config)
+    public function __construct(System $system, Session $session, Config $config)
     {
         $this->AuthorizationOptions = [];
         $this->OwnerDetails = null;
         $this->Provider = null;
         $this->Valid = false;
         $this->Token = null;
-
-        $this->Config = Config::getInstance();
+        $this->System = $system;
+        $this->Session = $session;
+        $this->Config = $config;
         $this->BaseUrl = $this->Config->get('CDASH_BASE_URL');
         $this->OAuth2Settings = $this->Config->get('OAUTH2_PROVIDERS');
     }
 
     public function initializeSession()
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_name('CDash');
-            session_cache_limiter('private_no_expire');
-            $cookie_time = $this->Config->get('CDASH_COOKIE_EXPIRATION_TIME');
-            session_set_cookie_params($cookie_time);
-            @ini_set('session.gc_maxlifetime', $cookie_time + 600);
-            session_start();
-            if (!array_key_exists('cdash', $_SESSION)) {
-                $_SESSION['cdash'] = [];
+        if (!$this->Session->isActive()) {
+            $this->Session->start(Session::CACHE_PRIVATE_NO_EXPIRE);
+            if (!$this->Session->getSessionVar('cdash')) {
+                $this->Session->setSessionVar('cdash', []);
             }
-            // Store the URI that the user is trying to access in the session.
             if (array_key_exists('dest', $_GET)) {
-                $_SESSION['cdash']['dest'] = $_GET['dest'];
+                $this->Session->setSessionVar('cdash.dest', $_GET['dest']);
             }
         }
     }
 
     public function getAuthorizationCode()
     {
+        $provider = $this->getProvider();
         // If we don't have an authorization code then get one
-        $authUrl = $this->Provider->getAuthorizationUrl(
-                $this->AuthorizationOptions);
-        $_SESSION['cdash']['oauth2state'] = $this->Provider->getState();
+        $authUrl = $provider->getAuthorizationUrl($this->AuthorizationOptions);
+        $this->Session->setSessionVar('cdash.oauth2state', $provider->getState());
 
         // Prevent the browser from caching this redirect.
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-        header('Location: '. $authUrl);
-        exit;
+        $this->System->header("Cache-Control: no-cache, must-revalidate");
+        $this->System->header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+        $this->System->header('Location: '. $authUrl);
+        $this->System->system_exit();
     }
 
     public function checkState()
     {
-        if (empty($_GET['state']) ||
-                ($_GET['state'] !== $_SESSION['cdash']['oauth2state'])) {
+        $session_state = $this->Session->getSessionVar('cdash.oauth2state');
+        if (empty($_GET['state']) || ($_GET['state'] !== $session_state)) {
             unset($_SESSION['cdash']['oauth2state']);
-            exit('Invalid state');
+            $this->System->system_exit('Invalid state');
         }
     }
 
@@ -93,17 +94,19 @@ class OAuth2Provider
         if (!$this->Token) {
             return false;
         }
-        $this->OwnerDetails = $this->Provider->getResourceOwner($this->Token);
+
+        $provider = $this->getProvider();
+        $this->OwnerDetails = $provider->getResourceOwner($this->Token);
         return true;
     }
 
-    public function auth()
+    public function auth(User $user)
     {
         $this->initializeSession();
-
+        $provider = $this->getProvider();
         // Get an authorization code if we do not already have one.
         if (!isset($_GET['code'])) {
-            $this->getAuthorizationCode();
+            return $this->getAuthorizationCode();
         }
 
         // Check given state against previously stored one to mitigate
@@ -111,7 +114,7 @@ class OAuth2Provider
         $this->checkState();
 
         // Try to get an access token using the authorization code grant.
-        $this->Token = $this->Provider->getAccessToken('authorization_code',
+        $this->Token = $provider->getAccessToken('authorization_code',
                 [ 'code' => $_GET['code'] ]);
 
         // Use the access token to get the user's email.
@@ -119,14 +122,14 @@ class OAuth2Provider
             $email = $this->getEmail();
             if ($email) {
                 // Check if this email address appears in our user database.
-                $user = new User();
                 $userid = $user->GetIdFromEmail($email);
                 if (!$userid) {
                     // if no match is found, redirect to pre-filled out
                     // registration page.
                     $firstname = $this->getFirstName();
                     $lastname = $this->getLastName();
-                    header("Location: $this->BaseURL/register.php?firstname=$firstname&lastname=$lastname&email=$email");
+                    $baseUrl = $this->Config->get('CDASH_BASE_URL');
+                    $this->System->header("Location: $baseUrl/register.php?firstname=$firstname&lastname=$lastname&email=$email");
                     return false;
                 }
 
@@ -140,25 +143,34 @@ class OAuth2Provider
                    }
                  */
 
-                $dest = $_SESSION['cdash']['dest'];
+                $dest = $this->Session->getSessionVar('cdash.dest');
                 $sessionArray = array(
                         'login' => $email,
                         'passwd' => $user->Password,
-                        'ID' => session_id(),
+                        'ID' => $this->Session->getSessionId(),
                         'valid' => 1,
                         'loginid' => $user->Id);
-                $_SESSION['cdash'] = $sessionArray;
-                session_write_close();
-                header("Location: $dest");
+                $this->Session->setSessionVar('cdash', $sessionArray);
+                $this->Session->writeClose();
+                $this->System->header("Location: {$dest}");
                 // Authentication succeeded.
                 return true;
             } else {
                 // TODO: error handling
             }
         } catch (Exception $e) {
-        // TODO: error handling
-        echo $e->getMessage() . "<br>\n";
-        echo $e->getTraceAsString();
+            // TODO: error handling
+            echo $e->getMessage() . "<br>\n";
+            echo $e->getTraceAsString();
         }
+    }
+
+    /**
+     * @param AbstractProvider $provider
+     * @return void
+     */
+    public function setProvider(AbstractProvider $provider)
+    {
+        $this->Provider = $provider;
     }
 }
