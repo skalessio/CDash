@@ -13,9 +13,12 @@
   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
-
+namespace CDash\Middleware\Oauth2Provider;
 use CDash\Config;
 use CDash\Controller\Auth\Session;
+use CDash\Middleware\OAuth2Provider;
+use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Github;
 
 require_once dirname(__DIR__) . '/config/config.php';
 require_once 'auth/OAuth2Provider.php';
@@ -36,8 +39,7 @@ class GitHubProvider extends OAuth2Provider
             if (array_key_exists('clientId', $github_settings) &&
                     array_key_exists('clientSecret', $github_settings) &&
                     array_key_exists('redirectUri', $github_settings)) {
-                $this->Provider = new League\OAuth2\Client\Provider\Github(
-                        $github_settings);
+                $this->Provider = new Github($github_settings);
                 $this->Valid = true;
             }
         }
@@ -79,5 +81,13 @@ class GitHubProvider extends OAuth2Provider
     {
         $this->loadNameParts();
         return $this->NameParts[1];
+    }
+
+    /**
+     * @return AbstractProvider
+     */
+    public function getProvider()
+    {
+        // TODO: Implement getProvider() method.
     }
 }

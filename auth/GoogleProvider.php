@@ -13,9 +13,13 @@
   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
   PURPOSE. See the above copyright notices for more information.
 =========================================================================*/
+namespace CDash\Middleware\Oauth2Provider;
 
 use CDash\Config;
 use CDash\Controller\Auth\Session;
+use CDash\Middleware\OAuth2Provider;
+use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Google;
 
 require_once dirname(__DIR__) . '/config/config.php';
 require_once 'auth/OAuth2Provider.php';
@@ -37,8 +41,7 @@ class GoogleProvider extends OAuth2Provider
                 $hosted_domain = $url_parts['scheme'] . '://' . $url_parts['host'];
                 $google_settings['hostedDomain'] = $hosted_domain;
 
-                $this->Provider = new League\OAuth2\Client\Provider\Google(
-                        $google_settings);
+                $this->Provider = new Google($google_settings);
                 $this->Valid = true;
             }
         }
@@ -59,5 +62,13 @@ class GoogleProvider extends OAuth2Provider
     public function getLastName()
     {
         return $this->OwnerDetails->getLastName();
+    }
+
+    /**
+     * @return AbstractProvider
+     */
+    public function getProvider()
+    {
+        // TODO: Implement getProvider() method.
     }
 }
