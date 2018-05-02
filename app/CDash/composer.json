@@ -1,0 +1,51 @@
+{
+  "name": "kitware/cdash",
+  "description": "An open source, web-based software testing server",
+  "type": "project",
+  "homepage": "http://www.cdash.org",
+  "license": "BSD-3-Clause",
+  "support": {
+    "email": "kitware@kitware.com",
+    "issues": "https://github.com/Kitware/CDash/issues",
+    "source": "https://github.com/Kitware/CDash",
+    "wiki": "http://public.kitware.com/Wiki/CDash"
+  },
+  "require": {
+    "php": ">=5.5.9",
+    "ext-bcmath": "*",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-pdo": "*",
+    "ext-xsl": "*",
+    "bernard/bernard": "dev-master#f30c0186f0fb391eb6c7ab28f515bb30d34f402d",
+    "google/apiclient": "2.1.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "monolog/monolog": "~1.19",
+    "paragonie/random_compat": "2.0.4",
+    "pear/archive_tar": "~1.4",
+    "predis/predis": "~0.8",
+    "ramsey/uuid": "~3.4",
+    "suin/php-rss-writer": "~1.4",
+    "swiftmailer/swiftmailer": "~5.4",
+    "sendgrid/sendgrid": "5.0.4",
+    "php-di/php-di": "^5.4"
+  },
+  "require-dev": {
+    "ext-gd": "*",
+    "ext-xdebug": "*",
+    "friendsofphp/php-cs-fixer": "~1.11",
+    "phpunit/phpunit-selenium": "~1.4",
+    "phpunit/phpunit": "~4.8",
+    "sensiolabs/security-checker": "~3.0"
+  },
+  "suggest": {
+    "ext-memcached": "",
+    "ext-pdo_mysql": "",
+    "ext-pdo_pgsql": "",
+    "ext-phar": ""
+  },
+  "autoload": {
+    "psr-4": {"CDash\\": "include/CDash/"}
+  }
+}
