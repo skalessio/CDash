@@ -19,13 +19,15 @@ include_once 'include/common.php';
 include_once 'include/ctestparserutils.php';
 include_once 'include/repository.php';
 
+use CDash\Collection\BuildEmailCollection;
 use CDash\Collection\DynamicAnalysisCollection;
 use CDash\Collection\LabelCollection;
 use CDash\Config;
 use CDash\Log;
 use CDash\Collection\TestCollection;
-use CDash\Config;
 use CDash\Database;
+use CDash\Messaging\Topic\Topic;
+use CDash\Model\ActionableTypes;
 use CDash\Model\BuildGroup;
 use PDO;
 
@@ -96,6 +98,7 @@ class Build
     private $BuildConfigure;
     private $LabelCollection;
     private $DynamicAnalysisCollection;
+    private $BuildEmailCollection;
 
     public function __construct()
     {
@@ -2955,5 +2958,18 @@ class Build
             $this->DynamicAnalysisCollection = new DynamicAnalysisCollection();
         }
         return $this->DynamicAnalysisCollection;
+    }
+
+    public function GetBuildEmailCollection($category)
+    {
+        if (!$this->BuildEmailCollection) {
+            $this->BuildEmailCollection = BuildEmail::GetBuildEmailSent($this->Id, $category);
+        }
+        return $this->BuildEmailCollection;
+    }
+
+    public function SetBuildEmailCollection(BuildEmailCollection $collection)
+    {
+        $this->BuildEmailCollection = $collection;
     }
 }
