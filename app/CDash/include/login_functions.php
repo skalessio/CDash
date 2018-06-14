@@ -326,7 +326,7 @@ function auth($SessionCachePolicy = 'private_no_expire')
             }
             $cookieuseridkey = substr($cookievalue, 0, strlen($cookievalue) - 32);
             // $user = new User();
-            /** @var \User $userid */
+            /** @var User $userid */
             $user = $service->create(User::class);
             if ($user->FillFromCookie($cookiekey, $cookieuseridkey)) {
                 $session->start($SessionCachePolicy);
@@ -350,7 +350,7 @@ function auth($SessionCachePolicy = 'private_no_expire')
         $email = $session->getSessionVar('cdash.login');
 
         if (!empty($email)) {
-            /** @var \User $userid */
+            /** @var User $userid */
             $user = $service->create(User::class);
             $userid = $user->GetIdFromEmail($email);
             if (!$userid) {
@@ -420,11 +420,32 @@ function LoginForm($loginerror)
         $xml .= '<allowlogincookie>1</allowlogincookie>';
     }
 
-    if ($GOOGLE_CLIENT_ID != '' && $GOOGLE_CLIENT_SECRET != '') {
+    if ($GOOGLE_CLIENT_ID != '' && $GOOGLE_CLIENT_SECRET != '' &&
+        !array_key_exists('Google', $OAUTH2_PROVIDERS)) {
+        // Backwards compatibility for previous Google-login implementation.
+        $OAUTH2_PROVIDERS['Google'] = [
+            'clientId'          => $GOOGLE_CLIENT_ID,
+            'clientSecret'      => $GOOGLE_CLIENT_SECRET,
+            'redirectUri'       => get_server_URI() . '/auth/Google.php'
+        ];
+    }
+
+    // OAuth 2.0 support.
+    $valid_oauth2_providers = ['GitHub', 'GitLab', 'Google'];
+    $enabled_oauth2_providers = [];
+    foreach (array_keys($OAUTH2_PROVIDERS) as $provider) {
+        if (in_array($provider, $valid_oauth2_providers)) {
+            $enabled_oauth2_providers[] = $provider;
+        }
+    }
+    if (!empty($enabled_oauth2_providers)) {
         $xml .= '<oauth2>';
-        $xml .= add_XML_value('client', $GOOGLE_CLIENT_ID);
-        // Google OAuth needs to know the base url to redirect back to
-        $xml .= add_XML_value('CDASH_BASE_URL', get_server_URI());
+        foreach ($enabled_oauth2_providers as $provider) {
+            $xml .= '<provider>';
+            $xml .= add_XML_value('name', $provider);
+            $xml .= add_XML_value('img', "img/${provider}_signin.png");
+            $xml .= '</provider>';
+        }
         $xml .= '</oauth2>';
     }
 
