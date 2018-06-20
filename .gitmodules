@@ -1,0 +1,3 @@
+[submodule "app/CDash"]
+	path = app/CDash
+	url = git@github.com:Kitware/CDash.git
