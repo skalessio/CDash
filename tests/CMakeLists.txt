@@ -1,5 +1,6 @@
 set(testing_dir "${CDash_SOURCE_DIR}/tests")
 set(binary_testing_dir "${CDash_BINARY_DIR}/tests")
+set(laravel_root "${CDash_BINARY_DIR}/../../..")
 set(PHPUNIT "${CDash_SOURCE_DIR}/vendor/bin/phpunit")
 
 # function to add a new PHP based coverage test to CDash
@@ -30,7 +31,12 @@ function(add_unit_test TestName)
     COMMAND ${PHP_EXE} ${phpunit_extra_arg} ${PHPUNIT} -c ${testing_dir}/phpunit.xml ${testing_dir}/case/${TestName}Test.php
   )
 endfunction(add_unit_test TestName)
-
+function(add_laravel_integration_test TestName)
+  add_test(
+    NAME ${TestName}
+    COMMAND ${PHP_EXE} ${phpunit_extra_arg} ${laravel_root}/vendor/bin/phpunit -c ${laravel_root}/phpunit.xml ${laravel_root}/tests/integration/${TestName}.php
+  )
+endfunction(add_laravel_integration_test)
 # phpunit tests
 set(phpunit_extra_arg "")
 if (CDASH_CONFIGURE_HTACCESS_FILE)
@@ -59,7 +65,8 @@ add_unit_test(/CDash/TestUseCase)
 add_php_test(install)
 add_php_test(compressedtest)
 add_php_test(createpublicdashboard)
-add_php_test(email)
+# add_php_test(email)
+add_laravel_integration_test(EmailProjectTest)
 add_php_test(projectwebpage)
 add_php_test(subproject)
 add_php_test(actualtrilinossubmission)
