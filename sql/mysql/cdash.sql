@@ -602,6 +602,9 @@ CREATE TABLE `user` (
   `institution` varchar(255) NOT NULL default '',
   `admin` tinyint(4) NOT NULL default '0',
   `cookiekey` varchar(40) NOT NULL default '',
+  `remember_token` varchar(100) null,
+  `created_at` timestamp null,
+  `updated_at` timestamp null,
   PRIMARY KEY  (`id`),
   KEY `email` (`email`)
 );
