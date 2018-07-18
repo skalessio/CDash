@@ -11,6 +11,8 @@
 |
 */
 
+Route::any('/submit', 'CdashController@submit');
+
 /*
 Route::get('/', function () {
     return view('welcome');
