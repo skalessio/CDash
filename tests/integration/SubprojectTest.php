@@ -44,6 +44,7 @@ class SubprojectTest extends \TestCase
         'description' => 'Project SubprojectExample test for cdash testing',
         'emailbrokensubmission' => 1,
         'emailredundantfailures' => 1,
+        'uploadquota' => 1024,
       ]);
 
       DB::table('user2project')
