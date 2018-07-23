@@ -20,7 +20,6 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - run: sudo chown -R kitware:www-data /home/kitware/cdash && sudo chmod -R 770 /home/kitware/cdash
       - run:
           name: Upgrade Chrome
           command: |
@@ -44,6 +43,7 @@ jobs:
       - run: sudo /etc/init.d/apache2 restart
       - run: mkdir _build
       - run: cd _build && cmake -DCDASH_TESTING_RENAME_LOGS=true -DCDASH_DB_HOST=127.0.0.1 -DCDASH_DIR_NAME="" -DCDASH_DB_LOGIN=root -DBUILDNAME="${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}_MySQL" -DSITE="CircleCI-2.0" ../app/CDash
+      - run: sudo chown -R kitware:www-data /home/kitware/cdash && sudo chmod -R 770 /home/kitware/cdash
       - run: cd _build && ctest --extra-verbose --no-compress-output --track Continuous --test-action Test --test-action Submit .
 #      - run: rm -rf _build && mkdir _build
 #      - run: cd _build && cmake -DCDASH_TESTING_RENAME_LOGS=true -DCDASH_DB_TYPE=pgsql -DCDASH_DIR_NAME="" -DCDASH_DB_LOGIN=postgres -DBUILDNAME="${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}_PostgreSQL" -DSITE="CircleCI-2.0" ../app/CDash
