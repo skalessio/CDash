@@ -58,12 +58,12 @@ trait CTestXMLSubmissions
       return md5_file($this->stubs[$key]);
     }
   }
-  protected function initProjectDirectory($project, $path = 'CDash.tests.data')
+  protected function initProjectDirectory($directory, $project = null, $path = 'CDash.tests.data')
   {
+    $this->projectName = $project ?: $directory;
     $path = implode(DIRECTORY_SEPARATOR, explode('.', $path));
-    $directory = app_path($path . DIRECTORY_SEPARATOR . $project);
+    $directory = app_path($path . DIRECTORY_SEPARATOR . $directory);
     if (is_readable($directory)) {
-      $this->projectName = $project;
       $glob = $directory . DIRECTORY_SEPARATOR . "*.xml";
       $files = File::glob($glob);
       foreach ($files as $file) {

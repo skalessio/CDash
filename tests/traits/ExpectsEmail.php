@@ -8,6 +8,7 @@ trait ExpectsEmail
 {
   protected $emailsRecieved = [];
 
+  protected $accounting = 0;
   public function listenForEmail()
   {
     Mail::getSwiftMailer()->registerPlugin(new EmailSendListener($this));
@@ -24,6 +25,7 @@ trait ExpectsEmail
   public function assertEmailSent()
   {
     $this->assertNotEmpty($this->emailsRecieved, 'No emails sent');
+    $this->accounting++;
     return $this;
   }
 
@@ -37,8 +39,10 @@ trait ExpectsEmail
     /** @var \Swift_Mime_Message $email */
     foreach ($this->emailsRecieved as $email) {
       if (array_key_exists($recipient, $email->getTo())) {
-        $message = new ExpectsEmailWrapper($this, $email);
-        break;
+        if (is_null($message)) {
+          $message = new ExpectsEmailWrapper($this, $recipient);
+        }
+        $message->addEmail($email);
       }
     }
     $this->assertNotNull($message, "No email sent to {$recipient}");
@@ -57,20 +61,31 @@ trait ExpectsEmail
     $message = "Expected {$expected} email(s), {$actual} email(s) present";
     $this->assertEquals($expected, $actual, $message);
   }
+
+  public function assertAllEmailsAccountedFor()
+  {
+    $this->assertCount($this->accounting, $this->emailsRecieved);
+  }
 }
 
 class ExpectsEmailWrapper
 {
-  /** @var \Swift_Mime_Message */
+  /** @var \Swift_Mime_Message[]  $messages */
+  private $messages = [];
+
+  /** @var \Swift_Mime_Message $message  */
   private $message;
 
   /** @var \TestCase $test */
   private $test;
 
-  public function __construct($test, $message)
+  /** @var string $recipient */
+  private $recipient;
+
+  public function __construct($test, $recipient)
   {
     $this->test = $test;
-    $this->message = $message;
+    $this->recipient = $recipient;
   }
 
   /**
@@ -79,7 +94,19 @@ class ExpectsEmailWrapper
    */
   public function withSubject($subject)
   {
-    $this->test->assertEquals($this->message->getSubject(), $subject);
+    $found = false;
+    foreach ($this->messages as $msg) {
+      if ($msg->getSubject() == $subject) {
+        $this->message = $msg;
+        $found = true;
+        break;
+      }
+    }
+    if (!$found) {
+      $trimmed_subject = substr($subject, 0, 50);
+      $ellipses = strlen($subject) > 50 ? '...' : '.';
+      $this->test->fail("No message for {$this->recipient} with subject {$trimmed_subject}{$ellipses}");
+    }
     return $this;
   }
 
@@ -98,6 +125,11 @@ class ExpectsEmailWrapper
     }
 
     return $this;
+  }
+
+  public function addEmail($message)
+  {
+    $this->messages[] = $message;
   }
 }
 
