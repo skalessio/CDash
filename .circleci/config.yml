@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - run: sudo /etc/init.d/apache2 restart
+      - run: sudo chown -R kitware:www-data /home/kitware/cdash && sudo chmod -R 770 /home/kitware/cdash
       - run:
           name: Upgrade Chrome
           command: |
@@ -28,8 +28,9 @@ jobs:
             sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
             sudo apt-get update
             sudo apt-get -y install google-chrome-stable
-      - run: sudo /etc/init.d/apache2 restart
+      - run: sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.conf
       - run: sudo rmdir /var/www/html && sudo ln -s /home/kitware/cdash/public /var/www/html
+      - run: sudo /etc/init.d/apache2 restart
       - run: chmod a+rwx app/CDash/backup app/CDash/log app/CDash/public/rss app/CDash/public/upload
       - run: sudo composer self-update --no-interaction
       - run: cd app/CDash && composer install --no-interaction --no-progress --prefer-dist
