@@ -30,10 +30,11 @@ jobs:
             sudo apt-get -y install google-chrome-stable
       - run: sudo /etc/init.d/apache2 restart
       - run: sudo ln -s /home/kitware/cdash/public /var/www/html
-      - run: chmod a+rwx backup log public/rss public/upload
+      - run: chmod a+rwx app/CDash/backup app/CDash/log app/CDash/public/rss app/CDash/public/upload
       - run: sudo composer self-update --no-interaction
+      - run: cd app/CDash && composer install --no-interaction --no-progress --prefer-dist
+      - run: cd app/CDash && npm install
       - run: composer install --no-interaction --no-progress --prefer-dist
-      - run: npm install
       - run: cp app/CDash/tests/circle/protractor.config.json app/CDash/node_modules/protractor/config.json
       - run: app/CDash/node_modules/.bin/webdriver-manager update
       - run:
