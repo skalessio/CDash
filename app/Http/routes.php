@@ -13,8 +13,6 @@
 
 Route::any('/submit', 'CdashController@submit');
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
+// This route must be the last route to check for deprecated requests
+// to CDash, if the request does tno exist it will return a 404
+Route::any('{url}', 'CdashController@cdash')->where('url', '.*');
