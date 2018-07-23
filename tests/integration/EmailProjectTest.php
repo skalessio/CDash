@@ -36,7 +36,7 @@ class EmailProjectTest extends \TestCase
   {
     $project = DB::table('project')
       ->select('id')
-      ->where(['Name' => 'EmailProjectExample'])
+      ->where(['name' => 'EmailProjectExample'])
       ->first();
 
     if (!$project) {
