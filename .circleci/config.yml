@@ -41,7 +41,6 @@ jobs:
           background: true
           command: app/CDash/node_modules/.bin/webdriver-manager start
       - run: cp .env.circleci.mysql .env
-      - run: php artisan key:generate
       - run: sudo /etc/init.d/apache2 restart
       - run: mkdir _build
       - run: cd _build && cmake -DCDASH_TESTING_RENAME_LOGS=true -DCDASH_DB_HOST=127.0.0.1 -DCDASH_DIR_NAME="" -DCDASH_DB_LOGIN=root -DBUILDNAME="${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}_MySQL" -DSITE="CircleCI-2.0" ../app/CDash
