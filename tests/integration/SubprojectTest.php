@@ -63,14 +63,14 @@ class SubprojectTest extends \TestCase
 
       foreach ($groups as $group => $email) {
         $pos += 1;
-        $id = DB::table('BuildGroup')->insertGetId([
+        $id = DB::table('buildgroup')->insertGetId([
           'name' => $group,
           'projectid' => $project->id,
           'description' => "{$group} builds",
           'summaryemail' => $email
         ]);
 
-        DB::table('BuildGroupPosition')
+        DB::table('buildgroupposition')
           ->insert([
             'buildgroupid' => $id,
             'position' => $pos,

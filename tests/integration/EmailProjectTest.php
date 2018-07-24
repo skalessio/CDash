@@ -49,7 +49,7 @@ class EmailProjectTest extends \TestCase
       // add build groups
       $groups = ['Nightly' => 0, 'Continuous' => 0, 'Experimental' => 2];
       foreach ($groups as $group => $email) {
-        DB::table('BuildGroup')->insert([
+        DB::table('buildgroup')->insert([
           'name' => $group,
           'projectid' => $project->id,
           'description' => "{$group} builds",
