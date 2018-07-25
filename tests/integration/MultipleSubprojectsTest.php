@@ -3,6 +3,7 @@ namespace CDash\Test;
 
 use CDash\Controller\Auth\Session;
 use CDash\ServiceContainer;
+use CDash\System;
 use CDash\Test\Traits\ExpectsEmail;
 use CDash\Test\Traits\CTestXMLSubmissions;
 use Illuminate\Support\Arr;
@@ -28,8 +29,16 @@ class MultipleSubprojectsTest extends \TestCase
       ->disableOriginalConstructor()
       ->getMock();
 
-    $service = ServiceContainer::getInstance();
-    $service->getContainer()->set(Session::class, $mock_session);
+    $mock_system = $this->getMockBuilder(System::class)
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    /** @var \DI\Container $container */
+    $container = ServiceContainer::getInstance()
+      ->getContainer();
+
+    $container->set(Session::class, $mock_session);
+    $container->set(System::class, $mock_system);
   }
 
   public function tearDown()
@@ -300,17 +309,12 @@ class MultipleSubprojectsTest extends \TestCase
         'defects' => 0,
         'defect_type' => null,
       ],
-      'EmptySubproject' => (object) [
-        'analyses' => 0,
-        'defect_types' => 0,
-        'defects' => 0,
-        'defect_type' => null,
-      ]
     ];
 
     $builds = DB::table('label')
       ->join('label2build', 'label.id', '=', 'label2build.labelid')
       ->join('build', 'label2build.buildid', '=', 'build.id')
+      ->join('dynamicanalysis', 'dynamicanalysis.buildid', '=', 'build.id')
       ->select('text', 'label2build.buildid as id')
       ->whereIn('label.text', array_keys($expects))
       ->where('build.parentid', '>', 0)
@@ -318,9 +322,12 @@ class MultipleSubprojectsTest extends \TestCase
 
 
     foreach ($expects as $build => $expected) {
-      $id = array_reduce($builds, function ($carry, $item) use ($build) {
-        return $item->text == $build ? $carry + $item->id : $carry;
-      });
+      $id = -2;
+      foreach ($builds as $row) {
+        if ($build === $row->text) {
+          $id = $row->id;
+        }
+      }
 
       $uri = "/api/v1/viewDynamicAnalysis.php?buildid={$id}";
       $this->get($uri);
