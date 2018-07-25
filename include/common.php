@@ -1415,7 +1415,7 @@ function get_author_email($projectname, $author)
     $stmt = $db->prepare("
         SELECT email FROM user WHERE id IN (
           SELECT up.userid FROM user2project AS up, user2repository AS ur
-           WHERE ur.userid=up.userid 
+           WHERE ur.userid=up.userid
            AND up.projectid=:projectid
            AND ur.credential=:author
            AND (ur.projectid=0 OR ur.projectid=:projectid)
