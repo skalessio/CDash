@@ -77,6 +77,7 @@ add_php_test(createpublicdashboard)
 add_laravel_integration_test(EmailProjectTest)
 # add_php_test(projectwebpage)
 add_laravel_integration_test(BatchmakeTest)
+add_laravel_integration_test(InsightExampleTest)
 add_laravel_integration_test(SubprojectTest)
 add_php_test(actualtrilinossubmission)
 
