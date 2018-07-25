@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
  */
 class Project extends Model
 {
+  protected $guarded = ['id'];
+
   /** @var string $table */
   protected $table = 'project';
 
@@ -46,6 +48,11 @@ class Project extends Model
   public function builds()
   {
     return $this->hasMany('App\Build', 'projectid');
+  }
+
+  public function buildGroups()
+  {
+    return $this->hasMany('App\BuildGroup', 'projectid');
   }
 
   /**
