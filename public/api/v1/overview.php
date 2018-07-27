@@ -64,7 +64,6 @@ if ($date != null) {
 }
 list($previousdate, $currentstarttime, $nextdate) = get_dates($date, $Project->NightlyTime);
 
-global $date_range;
 // Date range is currently hardcoded to two weeks in the past.
 // This could become a configurable value instead.
 $date_range = 14;
@@ -123,7 +122,6 @@ $query =
 $group_rows = pdo_query($query);
 add_last_sql_error('overview', $projectid);
 
-global $build_groups, $static_groups;
 $build_groups = array();
 $static_groups = array();
 
@@ -208,7 +206,6 @@ $coverage_build_group_names[] = 'Aggregate';
 // are defined:
 //   coverage_data[day][build group][coverage group] = percent_coverage
 //   dynamic_analysis_data[day][group][checker] = num_defects
-global $overview_data;
 $overview_data = array();
 $coverage_data = array();
 $dynamic_analysis_data = array();
@@ -246,7 +243,6 @@ for ($i = 0; $i < $date_range; $i++) {
 }
 
 // Get the beginning and end of our relevant date rate.
-global $beginning_timestamp;
 $beginning_timestamp = $currentstarttime - (($date_range - 1) * 3600 * 24);
 $end_timestamp = $currentstarttime + 3600 * 24;
 $start_date = gmdate(FMT_DATETIME, $beginning_timestamp);
