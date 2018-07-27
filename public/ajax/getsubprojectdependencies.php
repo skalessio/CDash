@@ -16,7 +16,6 @@
 
 $noforcelogin = 1;
 
-require_once dirname(dirname(__DIR__)) . '/config/config.php';
 require_once 'include/pdo.php';
 require_once 'include/common.php';
 include 'public/login.php';
