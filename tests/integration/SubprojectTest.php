@@ -15,71 +15,16 @@ class SubprojectTest extends \TestCase
   public function setUp()
   {
     parent::setUp();
-    $this->listenForEmail();
-    $this->initProjectDirectory('SubProjectExample');
-    $this->createProject();
-  }
-
-  /**
-   * Special Case:
-   *   Notice that DatabaseTransactions is not present. This is because we need for this test's
-   *   data to persist for backwards compatibility. We also only want the project to be created
-   *   once.
-   */
-  protected function createProject()
-  {
-    $project = DB::table('project')
-      ->select('id')
-      ->where(['name' => 'SubProjectExample'])
-      ->first();
-
-    if (!$project) {
-      $admin = DB::table('user')
-        ->select('id')
-        ->where(['email' => 'simpletest@localhost'])
-        ->first();
-
-      $project = factory(Project::class)->create([
-        'name' => 'SubProjectExample',
+    $this->project = $this->project('SubProjectExample',
+      [
         'description' => 'Project SubprojectExample test for cdash testing',
         'emailbrokensubmission' => 1,
         'emailredundantfailures' => 1,
         'uploadquota' => 1024,
       ]);
 
-      DB::table('user2project')
-        ->insert([
-          'userid' => $admin->id,
-          'projectid' => $project->id,
-          'emailsuccess' => 0,
-          'emailtype' => 3,
-          'emailcategory' => 126,
-          'role' => 2,
-        ]);
-
-      // add build groups
-      $groups = ['Nightly' => 0, 'Continuous' => 0, 'Experimental' => 2];
-      $pos = 0;
-
-      foreach ($groups as $group => $email) {
-        $pos += 1;
-        $id = DB::table('buildgroup')->insertGetId([
-          'name' => $group,
-          'projectid' => $project->id,
-          'description' => "{$group} builds",
-          'summaryemail' => $email
-        ]);
-
-        DB::table('buildgroupposition')
-          ->insert([
-            'buildgroupid' => $id,
-            'position' => $pos,
-            'starttime' => '1980-01-01 00:00:00',
-            'endtime' => '1980-01-01 00:00:00',
-          ]);
-      }
-    }
-    $this->project = $project->id;
+    $this->listenForEmail();
+    $this->initProjectDirectory('SubProjectExample');
   }
 
   public function testSubmitsProjectFile()
