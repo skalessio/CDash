@@ -24,7 +24,7 @@ class DeleteSubProjectTestCase extends KWWebTestCase
             return false;
         }
 
-        sleep(1);
+        sleep(2);
         $this->get($this->url . '/api/v1/viewSubProjects.php?project=Trilinos');
         $this->assertNoText('FEApp');
 

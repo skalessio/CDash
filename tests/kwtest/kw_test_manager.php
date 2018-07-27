@@ -45,6 +45,7 @@ class TestManager
 
     /** Delete the log file */
     public function removeLogAndBackupFiles($logfilename)
+
     {
         $config = \CDash\Config::getInstance();
         if (file_exists($logfilename)) {
