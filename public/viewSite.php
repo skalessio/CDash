@@ -25,6 +25,7 @@ require_once 'include/version.php';
 
 use CDash\Config;
 use CDash\Model\User;
+$config = Config::getInstance();
 
 $config = Config::getInstance();
 

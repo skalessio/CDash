@@ -18,7 +18,6 @@ require_once 'include/pdo.php';
 require_once 'include/common.php';
 
 use CDash\Config;
-
 $config = Config::getInstance();
 
 $projectid = pdo_real_escape_numeric($_GET['projectid']);

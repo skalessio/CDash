@@ -31,7 +31,6 @@ require_once 'include/version.php';
 use CDash\Config;
 use CDash\Database;
 use CDash\Model\User;
-
 $config = Config::getInstance();
 
 if ($config->get('CDASH_PRODUCTION_MODE')) {

@@ -16,6 +16,7 @@ require_once 'include/memcache_functions.php';
 
 use CDash\Config;
 use CDash\Model\Project;
+$config = Config::getInstance();
 
 $config = Config::getInstance();
 
