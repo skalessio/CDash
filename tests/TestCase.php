@@ -63,6 +63,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $this->setBuildGroups($project);
         $this->setProjectAdmin($project);
+        $this->createRSSFile($project);
       }
 
       return $project;
@@ -112,4 +113,26 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         'emailtype' => 3
       ]);
     }
+
+  /**
+   * This method creates a rss files so that we can control its ownership and permissions
+   *
+   * @param Project $project
+   */
+    protected function createRSSFile(Project $project)
+    {
+      $cdash_root = config('cdash.deprecated.CDASH_ROOT_DIR');
+      $rss_dir = "{$cdash_root}/public/rss";
+
+      $rss_xml = "{$rss_dir}/SubmissionRSS{$project->name}.xml";
+      file_put_contents($rss_xml, '');
+      // $stat = stat($rss_dir);
+      // chgrp($rss_xml, $stat['gid']); // Operation not permitted
+
+      // Here it would be nice to change the group, but requires that user initiating test
+      // be part of the same group as webserver, e.g. www-data, so to make things easier
+      // for the time being use chmod.
+      chmod($rss_xml, 777);
+    }
+
 }

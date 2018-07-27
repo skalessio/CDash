@@ -41,7 +41,7 @@ jobs:
           command: app/CDash/node_modules/.bin/webdriver-manager start
       - run: cp .env.circleci.mysql .env
       - run: sudo /etc/init.d/apache2 restart
-      - run: mkdir _build
+      - run: mkdir _build && touch ./storage/logs/laravel.log
       - run: cd _build && cmake -DCDASH_TESTING_RENAME_LOGS=true -DCDASH_DB_HOST=127.0.0.1 -DCDASH_DIR_NAME="" -DCDASH_DB_LOGIN=root -DBUILDNAME="${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}_MySQL" -DSITE="CircleCI-2.0" ../app/CDash
       - run: sudo chown -R kitware:www-data /home/kitware/cdash && sudo chmod -R 770 /home/kitware/cdash
       - run: cd _build && ctest --extra-verbose --no-compress-output --track Experimental --test-action Test --test-action Submit .
