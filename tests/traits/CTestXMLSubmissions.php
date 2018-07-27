@@ -24,7 +24,11 @@ trait CTestXMLSubmissions
       ];
 
       $this->call($method, $uri, [], [], [], $server, $content);
-      $this->assertResponseOk();
+      $actual = $this->response->getStatusCode();
+      $this->assertTrue(
+        $this->response->isOk(),
+        "Expected status code 200, got {$actual} trying to submit {$key}."
+      );
     } else {
       $this->assertTrue(false, "File, {$file}, not prepared for submission");
     }
