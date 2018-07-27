@@ -18,46 +18,17 @@ class EmailProjectTest extends \TestCase
   {
     parent::setUp();
 
+    $this->project = $this->project('EmailProjectExample', [
+      'description' => "Project EmailProjectExample test for cdash testing",
+      'uploadquota' => 1073741824,
+    ]);
+
     $this->listenForEmail();
+
     $this->initProjectDirectory('EmailProjectExample');
 
     /* The following methods will check exists before creating */
-    $this->createProject();
     $this->createUser();
-  }
-
-  /**
-   * Special Case:
-   *   Notice that DatabaseTransactions is not present. This is because we need for this test's
-   *   data to persist for backwards compatibility. We also only want the project to be created
-   *   once.
-   */
-  protected function createProject()
-  {
-    $project = DB::table('project')
-      ->select('id')
-      ->where(['name' => 'EmailProjectExample'])
-      ->first();
-
-    if (!$project) {
-      $project = factory(Project::class)->create([
-        'name' => 'EmailProjectExample',
-        'description' => 'Project EmailProjectExample test for cdash testing',
-        'uploadquota' => 1073741824,
-      ]);
-
-      // add build groups
-      $groups = ['Nightly' => 0, 'Continuous' => 0, 'Experimental' => 2];
-      foreach ($groups as $group => $email) {
-        DB::table('buildgroup')->insert([
-          'name' => $group,
-          'projectid' => $project->id,
-          'description' => "{$group} builds",
-          'summaryemail' => $email
-        ]);
-      }
-    }
-    $this->project = $project->id;
   }
 
   /**
@@ -79,36 +50,35 @@ class EmailProjectTest extends \TestCase
         'password' => \CDash\Model\User::PasswordHash('user1'),
       ]);
 
-      $admin = DB::table('user')
-        ->select('id')
-        ->where(['email' => 'simpletest@localhost'])
-        ->first();
-
       DB::table('user2project')
         ->insert([
           [
             'userid' => $user->id,
-            'projectid' => $this->project,
+            'projectid' => $this->project->id,
             'emailsuccess' => 1,
             'emailtype' => 1,
             'emailcategory' => 126,
             'role' => 0
           ],
+        ]);
+
+      DB::table('user2project')
+        ->where('userid', 1)
+        ->where('projectid', $this->project->id)
+        ->update(
           [
-            'userid' => $admin->id,
-            'projectid' => $this->project,
             'emailsuccess' => 0,
             'emailtype' => 3,
             'emailcategory' => 126,
             'role' => 2
-          ],
-        ]);
+          ]
+        );
 
       DB::table('user2repository')
         ->insert([
           'userid' => $user->id,
           'credential' => 'user1kw',
-          'projectid' => $this->project,
+          'projectid' => $this->project->id,
         ]);
     }
 

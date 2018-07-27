@@ -132,7 +132,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
       // Here it would be nice to change the group, but requires that user initiating test
       // be part of the same group as webserver, e.g. www-data, so to make things easier
       // for the time being use chmod.
-      chmod($rss_xml, 777);
+      chmod($rss_xml, 0777);
     }
 
 }
