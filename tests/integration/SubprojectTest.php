@@ -25,6 +25,19 @@ class SubprojectTest extends \TestCase
 
     $this->listenForEmail();
     $this->initProjectDirectory('SubProjectExample');
+
+    DB::table('user2project')
+      ->where('userid', 1)
+      ->where('projectid', $this->project->id)
+      ->update(
+        [
+          'emailsuccess' => 0,
+          'emailtype' => 3,
+          'emailcategory' => 126,
+          'role' => 2
+        ]
+      );
+
   }
 
   public function testSubmitsProjectFile()
