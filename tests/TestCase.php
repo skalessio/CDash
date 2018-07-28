@@ -1,4 +1,20 @@
 <?php
+/**
+ * =========================================================================
+ *   Program:   CDash - Cross-Platform Dashboard System
+ *   Module:    $Id$
+ *   Language:  PHP
+ *   Date:      $Date$
+ *   Version:   $Revision$
+ *
+ *   Copyright (c) Kitware, Inc. All rights reserved.
+ *   See LICENSE or http://www.cdash.org/licensing/ for details.
+ *
+ *   This software is distributed WITHOUT ANY WARRANTY; without even
+ *   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *   PURPOSE. See the above copyright notices for more information.
+ * =========================================================================
+ */
 
 use App\BuildGroup;
 use App\Project;
@@ -69,6 +85,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
       return $project;
     }
 
+  /**
+   * Adds default build groups to a project and sets the Nightly group in the overview_components
+   *
+   * @param Project $project
+   */
     protected function setBuildGroups(Project $project)
     {
       $groups = [
@@ -103,6 +124,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
       }
     }
 
+  /**
+   * Sets the admin for a project
+   *
+   * @param Project $project
+   */
     protected function setProjectAdmin(Project $project)
     {
       // Add administrator to the project
