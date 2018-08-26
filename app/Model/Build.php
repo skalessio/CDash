@@ -122,6 +122,7 @@ class Build
         $this->Type = '';
         $this->Uuid = '';
         $this->TestCollection = new TestCollection();
+        $this->CommitAuthors = [];
 
         $this->PDO = Database::getInstance()->getPdo();
     }
@@ -1552,7 +1553,8 @@ class Build
             $tests = 0;
 
             // cache the author, email results
-            array_push($this->CommitAuthors, array_unique([$author, $email]));
+            $this->CommitAuthors = array_unique(array_merge($this->CommitAuthors, [$author, $email]));
+            // array_push($this->CommitAuthors, array_unique([$author, $email]));
 
             if ($author != $previousauthor) {
                 $newbuild = 1;
