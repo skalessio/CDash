@@ -3010,9 +3010,13 @@ class Build
         return $this->BuildEmailCollection->get($category);
     }
 
-    public function SetBuildEmailCollection(BuildEmailCollection $collection)
+    public function SetBuildEmailCollection(BuildEmailCollection $collection, $category)
     {
-        $this->BuildEmailCollection = $collection;
+        if (!$this->BuildEmailCollection) {
+            $this->BuildEmailCollection = new CollectionCollection();
+        }
+
+        $this->BuildEmailCollection->addItem($collection, $category);
     }
 
     public function SetUpdate(BuildUpdate $update)
