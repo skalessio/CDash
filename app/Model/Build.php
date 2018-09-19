@@ -102,7 +102,7 @@ class Build
     private $LabelCollection;
     private $DynamicAnalysisCollection;
     private $BuildEmailCollection;
-    private $Update;
+    private $BuildUpdate;
 
     // TODO: ErrorDiffs appears to be no longer used?
     private $ErrorDifferences;
@@ -3019,14 +3019,20 @@ class Build
         $this->BuildEmailCollection->addItem($collection, $category);
     }
 
-    public function SetUpdate(BuildUpdate $update)
+    /**
+     * @param BuildUpdate $buildUpdate
+     */
+    public function SetBuildUpdate(BuildUpdate $buildUpdate)
     {
-        $this->Update = $update;
+        $this->BuildUpdate = $buildUpdate;
     }
 
-    public function GetUpdate()
+    /**
+     * @return BuildUpdate|null
+     */
+    public function GetBuildUpdate()
     {
-        return $this->Update;
+        return $this->BuildUpdate;
     }
 
     // TODO: Create a diff class
