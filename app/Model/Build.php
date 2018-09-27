@@ -146,6 +146,7 @@ class Build
         $this->Errors[] = $error;
     }
 
+    // TODO: turn into collection only
     public function AddLabel($label)
     {
         if (!isset($this->Labels)) {
@@ -2940,8 +2941,9 @@ class Build
 
     public function GetLabelCollection()
     {
-        if (!$this->LabelCollection) {
-            $this->LabelCollection = new LabelCollection();
+        $this->LabelCollection = new LabelCollection();
+
+        if ($this->Labels) {
             foreach ($this->Labels as $label) {
                 $this->LabelCollection->add($label);
             }
