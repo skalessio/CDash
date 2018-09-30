@@ -19,11 +19,15 @@ use CDash\Collection\BuildCollection;
 require_once 'xml_handlers/abstract_handler.php';
 require_once 'xml_handlers/actionable_build_interface.php';
 
+use CDash\Messaging\Notification\NotifyOn;
+use CDash\Messaging\Topic\TopicCollection;
+use CDash\Messaging\Topic\UpdateErrorTopic;
 use CDash\Model\Build;
 use CDash\Model\BuildUpdateFile;
 use CDash\Model\Site;
 use CDash\Model\BuildUpdate;
 use CDash\Model\Feed;
+use CDash\Model\SubscriberInterface;
 
 /** Write the updates in one block
  *  In case of a lot of updates this might take up some memory */
@@ -245,8 +249,18 @@ class UpdateHandler extends AbstractHandler implements ActionableBuildInterface
         return $collection;
     }
 
-    public function getProjectId()
+    /**
+     * @param SubscriberInterface $subscriber
+     * @return TopicCollection
+     */
+    public function GetTopicCollectionForSubscriber(SubscriberInterface $subscriber)
     {
-        // TODO: Implement getProjectId() method.
+        $collection = new TopicCollection();
+        $preferences = $subscriber->getNotificationPreferences();
+        if ($preferences->get(NotifyOn::UPDATE_ERROR)) {
+            $topic = new UpdateErrorTopic();
+            $collection->add($topic);
+        }
+        return $collection;
     }
 }
