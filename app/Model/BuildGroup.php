@@ -225,6 +225,14 @@ class BuildGroup
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function isNotifyingCommitters()
+    {
+        return !!$this->GetEmailCommitters();
+    }
+
     /** Get/Set whether or not committers should be emailed for this group. */
     public function GetEmailCommitters()
     {
