@@ -31,7 +31,7 @@
           <div id="headertop">
             <div id="topmenu">
               <a href="index.php">All Dashboards</a>
-              <a href="register.php">Register</a>
+              <a href="register">Register</a>
             </div>
           </div>
 

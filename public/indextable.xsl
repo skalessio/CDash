@@ -45,7 +45,7 @@
         <xsl:when test="cdash/user/id>0">
          <a href="user.php">My CDash</a>
         </xsl:when>
-        <xsl:otherwise><a href="user.php">Login</a> <a href="register.php">Register</a></xsl:otherwise>
+        <xsl:otherwise><a href="login">Login</a> <a href="register">Register</a></xsl:otherwise>
      </xsl:choose>
      <xsl:if test="cdash/user/id>0">
        <a href="user.php?logout=1">Log Out</a>
