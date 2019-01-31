@@ -191,7 +191,8 @@ class Database extends Singleton
      */
     public function prepare($sql, array $options = [])
     {
-        return $this->pdo->prepare($sql, $options);
+        $pdo = $this->getPdo();
+        return $pdo->prepare($sql, $options);
     }
 
     /**
