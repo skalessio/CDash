@@ -57,12 +57,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 // Make sure the user is an admin before proceeding with non-read-only methods.
 if ($method != 'GET') {
-    if (!isset($_SESSION['cdash']) || !isset($_SESSION['cdash']['loginid'])) {
+    $userid = Auth::id();
+    if (!$userid) {
         $response['error'] = 'No session found.';
         echo json_encode($response);
         return;
     }
-    $userid = pdo_real_escape_numeric($_SESSION['cdash']['loginid']);
 
     $Project = new Project;
     $User = new User;
