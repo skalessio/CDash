@@ -33,10 +33,8 @@ class ManageCoverageTestCase extends KWWebTestCase
         }
 
         //make sure we can't visit the manageCoverage page while logged out
-        $this->logout();
-        $content = $this->connect($this->url . "/manageCoverage.php?projectid=$projectid");
-        if (strpos($content, '<title>Login</title>') === false) {
-            $this->fail("'<title>Login</title>' not found when expected");
+
+        if (!$this->expectsPageRequiresLogin('/manageCoverage.php')) {
             return 1;
         }
 
