@@ -725,6 +725,9 @@ class CDashControllerBrowser extends SimpleBrowser
      */
     private function setRequestKeyValuePair(&$parameters, $key, $value)
     {
+        $value = urldecode($value);
+        $key = urldecode($key);
+
         // Handle key names that represent arrays of values
         if (preg_match('/^(\w+)\[(\w+)\]=?$/', $key, $parts)) {
             list(, $key, $index) = $parts;
@@ -732,6 +735,12 @@ class CDashControllerBrowser extends SimpleBrowser
                 $parameters[$key] = [];
             }
             $parameters[$key][$index] = $value;
+        } elseif(preg_match('/^(\w+)\[]$/', $key, $parts)) {
+            list(, $key) = $parts;
+            if (!isset($parameters[$key])) {
+                $parameters[$key] = [];
+            }
+            $parameters[$key][] = $value;
         } else {
             $parameters[$key] = $value;
         }
