@@ -21,9 +21,7 @@ include 'index.php';
 @$projectname = $_GET['project'];
 
 if (!isset($projectname)) {
-    $xml = generate_index_table();
-
-    generate_XSLT($xml, 'indextable');
+    return redirect('viewProjects.php');
 } else {
     $projectname = htmlspecialchars(pdo_real_escape_string($projectname));
     $projectid = get_project_id($projectname);
