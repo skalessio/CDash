@@ -31,6 +31,7 @@ use CDash\Model\Project;
 use CDash\Model\Site;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 require_once 'include/ctestparser.php';
 include_once 'include/common.php';
@@ -387,7 +388,7 @@ function post_submit()
 
     // Check if this submission requires a valid authentication token.
     if ($row['authenticatesubmissions'] && !valid_token_for_submission($projectid)) {
-        return;
+        return response('Forbidden', Response::HTTP_FORBIDDEN);
     }
 
     $buildname = htmlspecialchars(pdo_real_escape_string($_POST['build']));
@@ -524,7 +525,7 @@ function put_submit_file()
 
     // Check if this submission requires a valid authentication token.
     if ($row['authenticatesubmissions'] && !valid_token_for_submission($projectid)) {
-        return;
+        return response('Forbidden', Response::HTTP_FORBIDDEN);
     }
 
     // Begin writing this file to the backup directory.
