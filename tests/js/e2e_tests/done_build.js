@@ -12,6 +12,9 @@ describe("done_build", function() {
 
     // Click the icon to expand the menu.
     folderIcon.click();
+    browser.waitForAngular();
+
+    expect(element(by.partialLinkText('mark as done')).isPresent()).toBe(true)
 
     // Find the 'mark as done' link and click it.
     var link = element(by.partialLinkText('mark as done'));
@@ -43,5 +46,4 @@ describe("done_build", function() {
   it("toggle done for parent build", function() {
     toggle_done('index.php?project=Trilinos&date=2011-07-22');
   });
-
 });
