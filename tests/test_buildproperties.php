@@ -17,7 +17,7 @@ class BuildPropertiesTestCase extends KWWebTestCase
     public function __construct()
     {
         parent::__construct();
-        $this->PDO = get_link_identifier()->getPdo();
+        $this->PDO = \CDash\Database::getInstance();
         $this->Project = null;
     }
 
