@@ -43,6 +43,15 @@ use CDash\Model\Site;
 use CDash\ServiceContainer;
 
 $build = get_request_build();
+if (is_null($build)) {
+    return;
+}
+
+
+if (is_null($build)) {
+    return null;
+}
+
 $service = ServiceContainer::getInstance();
 $update = $service->get(BuildUpdate::class);
 $update->BuildId = $build->Id;

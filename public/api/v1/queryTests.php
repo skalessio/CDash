@@ -30,6 +30,10 @@ $start = microtime_float();
 
 // Handle required parameters: project and page.
 $project = get_project_from_request();
+if (is_null($project)) {
+    return;
+}
+
 $project->Fill();
 
 @$date = $_GET['date'];

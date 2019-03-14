@@ -178,6 +178,7 @@ function rest_post($pdo, $projectid)
             $error_msg =
                 "A group named '$name' already exists for this project.";
             json_error_response(['error' => $error_msg], 400);
+            return null;
         }
 
         $type = htmlspecialchars(pdo_real_escape_string($_POST['type']));

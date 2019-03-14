@@ -20,6 +20,10 @@ require_once 'include/api_common.php';
 $response = array();
 
 $build = get_request_build();
+if (is_null($build)) {
+    return;
+}
+
 
 // Get details about this build.
 $buildid = $build->Id;

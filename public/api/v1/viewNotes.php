@@ -23,6 +23,10 @@ use CDash\Model\Build;
 
 $start = microtime_float();
 $build = get_request_build();
+if (is_null($build)) {
+    return;
+}
+
 $buildid = get_request_build_id();
 
 @$date = $_GET['date'];
