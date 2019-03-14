@@ -859,8 +859,7 @@ class CDashControllerBrowser extends SimpleBrowser
         $parameters = [];
 
         if (!empty($query)) {
-            foreach ( explode("&", $query) as $parameter) {
-
+            foreach (explode("&", $query) as $parameter) {
                 if (strpos($parameter, '=') !== false) {
                     list($key, $value) = explode('=', $parameter);
                     $this->setRequestKeyValuePair($parameters, $key, $value);
@@ -890,7 +889,7 @@ class CDashControllerBrowser extends SimpleBrowser
                 $parameters[$key] = [];
             }
             $parameters[$key][$index] = $value;
-        } elseif(preg_match('/^(\w+)\[]$/', $key, $parts)) {
+        } elseif (preg_match('/^(\w+)\[]$/', $key, $parts)) {
             list(, $key) = $parts;
             if (!isset($parameters[$key])) {
                 $parameters[$key] = [];
@@ -997,7 +996,7 @@ class CDashControllerUserAgent extends SimpleUserAgent
      */
     private function getSocketEmulator()
     {
-        $socket = new class ($this->response) {
+        $socket = new class($this->response) {
             private $read = false;
             /** @var Response $body */
             private $response;
@@ -1007,10 +1006,10 @@ class CDashControllerUserAgent extends SimpleUserAgent
                 $this->response = $response;
             }
 
-            public function read() {
+            public function read()
+            {
                 $output = '';
                 if (!$this->read) {
-
                     if (is_a($this->response, StreamedResponse::class)) {
                         ob_start();
                         $this->response->send();
@@ -1026,11 +1025,13 @@ class CDashControllerUserAgent extends SimpleUserAgent
                 return $output;
             }
 
-            public function getSent() {
+            public function getSent()
+            {
                 return true;
             }
 
-            public function isError() {
+            public function isError()
+            {
                 $this->response->isServerError() ?:
                     $this->response->isClientError() ?:
                         false;

@@ -740,4 +740,3 @@ $response['generationtime'] = $generation_time;
 $response['columncount'] = $columncount;
 
 echo json_encode(cast_data_for_JSON($response));
-
