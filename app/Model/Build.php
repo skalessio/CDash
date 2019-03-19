@@ -107,6 +107,9 @@ class Build
     // TODO: ErrorDiffs appears to be no longer used?
     private $ErrorDifferences;
 
+    /**
+     * Build constructor.
+     */
     public function __construct()
     {
         $this->Append = false;
@@ -135,20 +138,29 @@ class Build
         $this->PDO = Database::getInstance()->getPdo();
     }
 
+    /**
+     * @return bool
+     */
     public function IsParentBuild()
     {
         return $this->ParentId == -1;
     }
 
+    /**
+     * @param $error
+     */
     public function AddError($error)
     {
         $error->BuildId = $this->Id;
         $this->Errors[] = $error;
     }
 
-    // TODO: turn into collection only
+    /**
+     * @param $label
+     */
     public function AddLabel($label)
     {
+        // TODO: turn into collection only
         if (!isset($this->Labels)) {
             $this->Labels = [];
         }
@@ -156,6 +168,9 @@ class Build
         $this->Labels[] = $label;
     }
 
+    /**
+     * @param $stamp
+     */
     public function SetStamp($stamp)
     {
         $this->Stamp = $stamp;
@@ -164,6 +179,9 @@ class Build
         }
     }
 
+    /**
+     * @return string
+     */
     public function GetStamp()
     {
         return $this->Stamp;
@@ -314,6 +332,10 @@ class Build
         return true;
     }
 
+    /**
+     * @param $buildid
+     * @return bool|mixed
+     */
     public function QuerySubProjectId($buildid)
     {
         $stmt = $this->PDO->prepare(
@@ -682,6 +704,9 @@ class Build
         return $stmt;
     }
 
+    /**
+     * @return bool|\PDOStatement
+     */
     public function GetConfigures()
     {
         if ($this->IsParentBuild()) {
@@ -761,6 +786,9 @@ class Build
         return 0;
     }
 
+    /**
+     * @return bool|void
+     */
     public function InsertLabelAssociations()
     {
         if ($this->Id) {
@@ -1832,7 +1860,10 @@ class Build
         return array_unique($labelids);
     }
 
-    // Get the group for a build
+    /**
+     * Get the group for a build
+     * @return bool|mixed
+     */
     public function GetGroup()
     {
         if (!$this->Id) {
@@ -2284,11 +2315,19 @@ class Build
         return $this->PullRequest;
     }
 
+    /**
+     * @param $pr
+     */
     public function SetPullRequest($pr)
     {
         $this->PullRequest = $pr;
     }
 
+    /**
+     * @param $message
+     * @param $url
+     * @throws \Exception
+     */
     private function NotifyPullRequest($message, $url)
     {
         // Figure out if we should notify this build or its parent.
@@ -2321,6 +2360,10 @@ class Build
         pdo_execute($stmt, [$idToNotify]);
     }
 
+    /**
+     * @param $duration
+     * @param bool $update_parent
+     */
     public function SetConfigureDuration($duration, $update_parent = true)
     {
         if (!$this->Id || !is_numeric($this->Id)) {
@@ -2347,6 +2390,10 @@ class Build
         }
     }
 
+    /**
+     * @param $duration
+     * @param bool $update_parent
+     */
     public function UpdateBuildDuration($duration, $update_parent = true)
     {
         if ($duration === 0 || !$this->Id || !is_numeric($this->Id)) {
@@ -2412,6 +2459,12 @@ class Build
         return Build::GetTestingDate($this->StartTime, $this->NightlyStartTime);
     }
 
+    /**
+     * @param $build_start_time
+     * @param $nightly_start_timestamp
+     * @return false|string
+     * @throws \Exception
+     */
     public static function GetTestingDate($build_start_time,
                                           $nightly_start_timestamp)
     {
@@ -2504,6 +2557,9 @@ class Build
         return $this->ParentId;
     }
 
+    /**
+     * @param $parentid
+     */
     public function SetParentId($parentid)
     {
         if ($parentid > 0 && $parentid == $this->Id) {
@@ -2641,6 +2697,9 @@ class Build
     }
 
     /**
+     * Returns the current Build's Site property. This method lazily loads the Site if no such
+     * object exists.
+     *
      * @return Site
      */
     public function GetSite()
@@ -2652,12 +2711,19 @@ class Build
         return $this->Site;
     }
 
+    /**
+     * Sets the current Build's Site property.
+     *
+     * @param Site $site
+     */
     public function SetSite(Site $site)
     {
         $this->Site = $site;
     }
 
     /**
+     * Given a $test, this method adds a Test to the current Build's TestCollection.
+     *
      * @param Test $test
      * @return $this
      */
@@ -2668,6 +2734,8 @@ class Build
     }
 
     /**
+     * Return the current Build's TestCollection.
+     *
      * @return TestCollection
      */
     public function GetTestCollection()
@@ -2790,6 +2858,9 @@ class Build
     }
 
     /**
+     * Returns the current Build's BuildConfigure property. This method lazily loads the
+     * BuildConfigure object if none exists.
+     *
      * @return BuildConfigure
      */
     public function GetBuildConfigure()
@@ -2802,6 +2873,9 @@ class Build
     }
 
     /**
+     * Sets the current Build's BuildConfigure property and ensures that the BuildConfigure's
+     * BuildId property is set with the current Build's Id property.
+     *
      * @param BuildConfigure $buildConfigure
      */
     public function SetBuildConfigure(BuildConfigure $buildConfigure)
@@ -2811,6 +2885,9 @@ class Build
     }
 
     /**
+     * Returns the current Build's Project object. This method lazily loads the Project if none
+     * exists.
+     *
      * @return Project
      */
     public function GetProject()
@@ -2823,6 +2900,8 @@ class Build
     }
 
     /**
+     * Sets the current Build's Project property.
+     *
      * @param Project $project
      */
     public function SetProject(Project $project)
@@ -2830,22 +2909,34 @@ class Build
         $this->Project = $project;
     }
 
+    /**
+     * Returns the current Build's TestFailedCount property.
+     *
+     * @return mixed
+     */
     public function GetTestFailedCount()
     {
         return $this->TestFailedCount;
     }
 
+    /**
+     * Returns the current Build's Type property.
+     *
+     * @return string
+     */
     public function GetBuildType()
     {
         return $this->Type;
     }
 
     /**
+     * This method returns an array of all of the authors who are responsible for changes made
+     * to the current Build.
+     *
      * @return array
      */
     public function GetCommitAuthors()
     {
-        // TODO: implement GetCommitAuthors
         // note: Per Zack: Depending on the type of submission (i.e. test, build error, etc)
         // this information may not yet be available as it is contained in the update xml
         // file submission.
@@ -2901,6 +2992,13 @@ class Build
         return $this->CommitAuthors;
     }
 
+    /**
+     * Given a $subscriber this method returns true if the current Build has contains changes
+     * authored by $subscriber and false if no such changes by the author exist.
+     *
+     * @param SubscriberInterface $subscriber
+     * @return bool
+     */
     public function AuthoredBy(SubscriberInterface $subscriber)
     {
         $authoredBy = false;
@@ -2918,6 +3016,10 @@ class Build
         return $authoredBy;
     }
 
+    /**
+     * Returns the current Build's LabelCollection.
+     * @return LabelCollection
+     */
     public function GetLabelCollection()
     {
         $this->LabelCollection = new LabelCollection();
@@ -2930,15 +3032,14 @@ class Build
         return $this->LabelCollection;
     }
 
-    public function isLabeled($label)
-    {
-        $labels = array_map(function ($lbl) {
-            return $lbl->Text;
-        }, $this->Labels);
-
-        return in_array($label, $labels);
-    }
-
+    /**
+     * Given a $filter of value ERROR or WARNING it will return the number of BuildErrors
+     * whose Type property matches that of the $filter. If no $filter is provided it returns
+     * the number of all the current Build's BuildErrors.
+     *
+     * @param null $filter
+     * @return int
+     */
     public function GetBuildErrorCount($filter = null)
     {
         $count = 0;
@@ -2955,6 +3056,14 @@ class Build
         return $count;
     }
 
+    /**
+     * Given a $filter of value ERROR or WARNING it will return the number of BuildFailures
+     * whose Type property matches that of the $filter. If no $filter is provided it returns
+     * the number of all the current Build's BuildFailures.
+     *
+     * @param null $filter
+     * @return int
+     */
     public function getBuildFailureCount($filter = null)
     {
         $count = 0;
@@ -2970,6 +3079,12 @@ class Build
         return $count;
     }
 
+    /**
+     * Adds a DynamicAnalysis object to the Build's DynamicAnalysisCollection.
+     *
+     * @param DynamicAnalysis $analysis
+     * @return $this
+     */
     public function AddDynamicAnalysis(DynamicAnalysis $analysis)
     {
         $analyses = $this->GetDynamicAnalysisCollection();
@@ -2977,6 +3092,12 @@ class Build
         return $this;
     }
 
+    /**
+     * Returns the current Build's DynamicAnalysisCollection object. This method lazily loads the
+     * DynamicAnalysisCollection if none exists.
+     *
+     * @return DynamicAnalysisCollection
+     */
     public function GetDynamicAnalysisCollection()
     {
         if (!$this->DynamicAnalysisCollection) {
@@ -2985,6 +3106,13 @@ class Build
         return $this->DynamicAnalysisCollection;
     }
 
+    /**
+     * Returns the BuildEmailCollection object. This method lazily loads a CollectionCollection
+     * object if none exists.
+     *
+     * @param $category
+     * @return bool|mixed
+     */
     public function GetBuildEmailCollection($category)
     {
         if (!$this->Id) {
@@ -3003,16 +3131,20 @@ class Build
         return $this->BuildEmailCollection->get($category);
     }
 
+    /**
+     * Sets the current build's BuildEmailCollection object.
+     *
+     * @param BuildEmailCollection $collection
+     * @param $category
+     */
     public function SetBuildEmailCollection(BuildEmailCollection $collection, $category)
     {
-        if (!$this->BuildEmailCollection) {
-            $this->BuildEmailCollection = new CollectionCollection();
-        }
-
         $this->BuildEmailCollection->addItem($collection, $category);
     }
 
     /**
+     * Sets the build's BuildUpdate object.
+     *
      * @param BuildUpdate $buildUpdate
      */
     public function SetBuildUpdate(BuildUpdate $buildUpdate)
@@ -3021,6 +3153,8 @@ class Build
     }
 
     /**
+     * Returns the BuildUpdate object.
+     *
      * @return BuildUpdate|null
      */
     public function GetBuildUpdate()
@@ -3028,7 +3162,13 @@ class Build
         return $this->BuildUpdate;
     }
 
-    // TODO: Create a diff class
+    /**
+     * Returns a data structure representing the difference between the previous build and
+     * the current build.
+     *
+     * @return array|bool
+     * TODO: Create a diff class
+     */
     public function GetDiffWithPreviousBuild()
     {
         if (!$this->Id) {
