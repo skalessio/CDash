@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="robots" content="noindex,nofollow" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_2.6.0.css" />
+    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_1554388202250.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <script src="js/CDash_2.6.0.min.js"></script>
+    <script src="js/CDash_1554388202250.min.js"></script>
 <!--
     <script type="text/javascript" src="js/cdashCreateProject.js"></script>
 -->
@@ -17,7 +17,7 @@
   <body bgcolor="#ffffff" ng-controller="CreateProjectController">
     <div ng-if="cdash.requirelogin == 1" ng-include="'login.php'"></div>
 
-    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.header || 'build/views/partials/header_2.6.0.html'"></ng-include>
+    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.header || 'build/views/partials/header_1554388202250.html'"></ng-include>
     <br/>
 
     <div ng-if="cdash.projectcreated == 1">
@@ -35,7 +35,7 @@
       <br />
     </div>
 
-    <div ng-if="cdash.requirelogin != 1 && !loading && !cdash.error && !cdash.projectcreated == 1">
+    <div id="main_content" ng-if="cdash.requirelogin != 1 && !loading && !cdash.error && !cdash.projectcreated == 1">
 
       <table ng-if="::cdash.edit == 1">
         <tr>
@@ -470,12 +470,12 @@
                   <span class="help_content" id="svnUsername_help">
                     <b>Username</b>
                     <br />
-                    Optional. Provide a username if you do not wish to use anonymous access to your repository.
+                    Optional. Provide a username if you do not wish to use anonymous access to your repository. For GitHub, this should be your <b>installation ID</b>.
                   </span>
                   <span class="help_content" id="svnPassword_help">
                     <b>Password</b>
                     <br />
-                    The password corresponding to the above user.  WARNING: this password will be stored in plaintext in the database.
+                    The password corresponding to the above user.  WARNING: this password will be stored in plaintext in the database. For GitHub, this field is unused.
                   </span>
                 </td>
               </tr>
@@ -1459,8 +1459,9 @@
                   <span class="help_content" id="warningsFilter_help">
                     <b>Warnings filter</b>
                     <br />
-                    Enter one or more regexes that will be used to filter build warnings.
-                    Any warnings matching any regex will not be saved to the database.
+                    Perform substring matching to filter out build warnings.
+                    Enter one filter per line.
+                    Any warnings containing one of these filters will not be saved to the database.
                   </span>
                 </td>
               </tr>
@@ -1480,8 +1481,9 @@
                   <span class="help_content" id="errorsFilter_help">
                     <b>Errors filter</b>
                     <br />
-                    Enter one or more regexes that will be used to filter build errors.
-                    Any errors matching any regex will not be saved to the database.
+                    Perform substring matching to filter out build errors.
+                    Enter one filter per line.
+                    Any errors containing one of these filters will not be saved to the database.
                   </span>
                 </td>
               </tr>
@@ -1526,6 +1528,6 @@
       </form>
     </div>
 
-    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.footer || 'build/views/partials/footer_2.6.0.html'"></ng-include>
+    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.footer || 'build/views/partials/footer_1554388202250.html'"></ng-include>
   </body>
 </html>

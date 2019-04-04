@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="robots" content="noindex,nofollow" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_2.6.0.css" />
+    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_1554388202250.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.qtip.min.css" />
     <link rel="stylesheet" type="text/css" href="css/jqModal.css" />
-    <script src="js/CDash_2.6.0.min.js"></script>
+    <script src="js/CDash_1554388202250.min.js"></script>
     <title>CDash - Continuous Integration Made Easy</title>
 
   </head>
@@ -26,13 +26,11 @@
       <div id="headerbottom">
         <div id="headerlogo">
           <a ng-href="{{cdash.home}}">
-            <img ng-show="cdash.logoid > 0" ng-src="displayImage.php?imgid={{cdash.logoid}}" border="0" height="50px"/>
-            <img ng-show="cdash.logoid < 1" src="img/cdash.png" border="0" height="50px"/>
+            <img id="projectlogo" border="0" height="50px" src="img/cdash.png" />
           </a>
         </div>
         <div id="headername2">
-          <span ng-bind="cdash.title"></span>
-          <span id="subheadername" ng-bind="cdash.subtitle"></span>
+          <span id="subheadername">{{::cdash.title}} {{::cdash.subtitle}}</span>
         </div>
       </div>
     </div>
@@ -102,6 +100,6 @@
     </table>
 
     <!-- FOOTER -->
-    <ng-include src="'build/views/partials/footer_2.6.0.html'"></ng-include>
+    <ng-include src="'build/views/partials/footer_1554388202250.html'"></ng-include>
   </body>
 </html>

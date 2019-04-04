@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="robots" content="noindex,nofollow" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_2.6.0.css" />
+    <link rel="stylesheet" type="text/css" ng-href="build/css/{{cssfile}}_1554388202250.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <script src="js/CDash_2.6.0.min.js"></script>
+    <script src="js/CDash_1554388202250.min.js"></script>
     <title ng-bind="title">CDash - My Profile</title>
   </head>
 
   <body bgcolor="#ffffff" ng-controller="UserController">
     <div ng-if="cdash.requirelogin == 1 && cdash.registered == 1" ng-include="'login.php?note=register'"></div>
     <div ng-if="cdash.requirelogin == 1 && cdash.registered == 0" ng-include="'login.php'"></div>
-    <div ng-if="cdash.requirelogin != 1 && !loading">
+    <div id="main_content" ng-if="cdash.requirelogin != 1 && !loading">
       <!-- Header -->
       <div id="header">
         <div id="headertop">
@@ -29,8 +29,7 @@
             <img id="projectlogo" border="0" height="50px" src="img/cdash.png" />
           </div>
           <div id="headername2">
-            CDash
-            <span id="subheadername">{{::cdash.user_name}}</span>
+            <span id="subheadername">CDash {{::cdash.user_name}}</span>
           </div>
         </div>
       </div>
@@ -439,6 +438,6 @@
 
     <!-- FOOTER -->
     <br/>
-    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.footer || 'build/views/partials/footer_2.6.0.html'"></ng-include>
+    <ng-include ng-if="cdash.requirelogin != 1" src="cdash.footer || 'build/views/partials/footer_1554388202250.html'"></ng-include>
   </body>
 </html>
