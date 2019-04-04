@@ -1,5 +1,5 @@
 <!-- For child view, display the label(s) as a link to the build summary -->
-<td ng-if="::cdash.childview == 1" align="left" class="paddt">
+<td ng-if="::cdash.childview == 1" align="left" class="paddt" colspan="2">
   <a ng-href="buildSummary.php?buildid={{::build.id}}">
     {{::build.label}}
   </a>
@@ -75,7 +75,7 @@
     <div style="float: left;" ng-if="::cdash.user.admin == 1">
       <!-- Display folder icon to edit this build for administrative users -->
       <a href="javascript:;" ng-click="toggleAdminOptions(build)">
-        <img src="img/folder.png" class="icon"/>
+        <img name="adminoptions" src="img/folder.png" class="icon"/>
       </a>
       <img src="img/loading.gif" ng-show="build.loading == 1"/>
     </div>

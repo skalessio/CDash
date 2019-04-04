@@ -118,7 +118,7 @@ describe("manageBuildGroup", function() {
     element(by.name('parentBuildGroupSelection')).element(by.cssContainingText('option', 'Experimental')).click();
     var matchField = element(by.name('dynamicBuildNameMatch'));
     matchField.clear();
-    matchField.sendKeys('sameImage');
+    matchField.sendKeys('same*mage');
     element(by.buttonText('Add content to BuildGroup')).click();
     browser.waitForAngular();
 
@@ -134,7 +134,7 @@ describe("manageBuildGroup", function() {
     // Find the "latestBuildGroup" table on this page and verify that it has
     // exactly two rows`.
     browser.get("index.php?project=InsightExample");
-    expect(element(By.partialLinkText("latestBuildGroup")).element(by.xpath('../../../../..')).all(by.repeater('build in buildgroup.pagination.filteredBuilds')).count()).toBe(2);
+    expect(element(By.partialLinkText("latestBuildGroup")).element(by.xpath('../..')).all(by.repeater('build in buildgroup.pagination.filteredBuilds')).count()).toBe(2);
   });
 
 

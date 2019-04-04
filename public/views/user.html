@@ -14,7 +14,7 @@
   <body bgcolor="#ffffff" ng-controller="UserController">
     <div ng-if="cdash.requirelogin == 1 && cdash.registered == 1" ng-include="'login.php?note=register'"></div>
     <div ng-if="cdash.requirelogin == 1 && cdash.registered == 0" ng-include="'login.php'"></div>
-    <div ng-if="cdash.requirelogin != 1 && !loading">
+    <div id="main_content" ng-if="cdash.requirelogin != 1 && !loading">
       <!-- Header -->
       <div id="header">
         <div id="headertop">
@@ -29,8 +29,7 @@
             <img id="projectlogo" border="0" height="50px" src="img/cdash.png" />
           </div>
           <div id="headername2">
-            CDash
-            <span id="subheadername">{{::cdash.user_name}}</span>
+            <span id="subheadername">CDash {{::cdash.user_name}}</span>
           </div>
         </div>
       </div>

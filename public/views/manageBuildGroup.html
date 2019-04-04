@@ -17,7 +17,7 @@
     <ng-include ng-if="cdash.requirelogin != 1" src="cdash.header || 'build/views/partials/header_@@version.html'"></ng-include>
     <br/>
 
-    <div class="container" ng-if="cdash.requirelogin != 1 && !loading">
+    <div id="main_content" class="container" ng-if="cdash.requirelogin != 1 && !loading">
 
       <!-- project selection form -->
       <div class="row">
@@ -303,7 +303,7 @@
                 <label for="dynamicBuildNameMatch">whose build name contains:</label>
                 <input name="dynamicBuildNameMatch" type="text" ng-model="dynamicBuildNameMatch" size="12" class="form-control"/>
                 <p class="help-block">
-                  Leave blank to ignore this criterion.
+                  Leave blank to ignore this criterion. Use * to match one or more characters.
                 </p>
               </div>
 
